@@ -20,11 +20,11 @@ class FirebaseCalls {
           print("Id ${value.user?.email}");
         }
 
-        Utils.flushBarErrorMessage("Sign Up Successful", context,
-            color: AppColors.greenColor);
         Timer(const Duration(seconds: 1), () {
           Navigator.popAndPushNamed(context, RoutesName.practice);
         });
+        Utils.flushBarErrorMessage("Sign Up Successful", context,
+            color: AppColors.greenColor);
       }).catchError((error, stackTrace) {
         if (kDebugMode) {
           print("error");
@@ -51,11 +51,11 @@ class FirebaseCalls {
         if (kDebugMode) {
           print("Id $value");
         }
-        Utils.flushBarErrorMessage("Login Successful", context,
-            color: AppColors.greenColor);
         Timer(const Duration(seconds: 1), () {
           Navigator.popAndPushNamed(context, RoutesName.practice);
         });
+        Utils.flushBarErrorMessage("Login Successful", context,
+            color: AppColors.blueColor);
       }).catchError((error, stackTrace) {
         if (kDebugMode) {
           print("Error");
@@ -78,11 +78,11 @@ class FirebaseCalls {
   Future signOut(BuildContext context) async {
     try {
       firebaseObject.signOut().then((value) {
-        Utils.flushBarErrorMessage("Logging out ... ", context,
-            color: AppColors.redColor);
         Timer(const Duration(seconds: 1), () {
           Navigator.popAndPushNamed(context, RoutesName.login);
         });
+        Utils.flushBarErrorMessage("Logged out successfully ", context,
+            color: AppColors.blueColor);
       });
     } on FirebaseAuthException catch (e) {
       if (kDebugMode) {
