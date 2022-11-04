@@ -18,21 +18,21 @@ class _PracticePageState extends State<PracticePage> {
     print(user?.email);
     print(user?.uid);
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
-      body: Column(
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Center(child: Text("Practice Page")),
-          RoundButton(
-              title: "Sign Out",
-              onPress: () {
-                FirebaseCalls().signOut(context);
-              })
-        ],
-      ),
-    );
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+        ),
+        body:
+            // Column(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     const Center(child: Text("Practice Page")),
+            //     RoundButton(
+            //         title: "Sign Out",
+            //         onPress: () {
+            //           FirebaseCalls().signOut(context);
+            //         })
+            //   ],
+            // ),
+            Container());
   }
 }
