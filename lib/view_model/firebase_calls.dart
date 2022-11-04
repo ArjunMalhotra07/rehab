@@ -37,6 +37,9 @@ class FirebaseCalls {
       if (kDebugMode) {
         print(e.message);
       }
+
+      Utils.flushBarErrorMessage("Error Signing in ... ", context,
+          color: AppColors.redColor);
     }
   }
 
@@ -66,16 +69,28 @@ class FirebaseCalls {
         print("Firebase Auth Exception Login");
         print(e.message);
       }
+
+      Utils.flushBarErrorMessage("Error Logging In ... ", context,
+          color: AppColors.redColor);
     }
   }
 
   Future signOut(BuildContext context) async {
-    firebaseObject.signOut().then((value) {
-      Utils.flushBarErrorMessage("Logging out ... ", context,
-          color: AppColors.redColor);
-      Timer(const Duration(seconds: 4), () {
-        Navigator.pushNamed(context, RoutesName.login);
+    try {
+      firebaseObject.signOut().then((value) {
+        Utils.flushBarErrorMessage("Logging out ... ", context,
+            color: AppColors.redColor);
+        Timer(const Duration(seconds: 4), () {
+          Navigator.pushNamed(context, RoutesName.login);
+        });
       });
-    });
+    } on FirebaseAuthException catch (e) {
+      if (kDebugMode) {
+        print("Firebase Auth Exception Logout");
+        print(e.message);
+      }
+      Utils.flushBarErrorMessage("Error Logging out ... ", context,
+          color: AppColors.redColor);
+    }
   }
 }
