@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
-import 'package:rehab/view/practice_page.dart';
+import 'package:rehab/view/home_page.dart';
 
 import '../utils/routes/routes_name.dart';
 
@@ -31,7 +31,7 @@ class FirebaseCalls {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PracticePage(
+                builder: (context) => HomePage(
                       name: name,
                     )),
           );
@@ -65,7 +65,7 @@ class FirebaseCalls {
           print("Id $value");
         }
         Timer(const Duration(seconds: 1), () {
-          Navigator.popAndPushNamed(context, RoutesName.practice);
+          Navigator.popAndPushNamed(context, RoutesName.main);
         });
         Utils.flushBarErrorMessage("Login Successful", context,
             color: Constants.blueColor);

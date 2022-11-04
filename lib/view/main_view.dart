@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rehab/view/practice_screen.dart';
 import 'package:rehab/view/home_page.dart';
-import 'package:rehab/view/practice_page.dart';
 import 'package:rehab/view/profile_page.dart';
 import 'package:rehab/view/rehab_page.dart';
 
@@ -17,7 +17,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   int currentIndex = 0;
 
   final screens = [
-    const HomePage(),
+    HomePage(),
     const RehabPage(),
     PracticePage(),
     const ProfilePage()
@@ -36,6 +36,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
         onTap: (index) => setState(() {
           currentIndex = index;
         }),
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.green,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.green.shade900,

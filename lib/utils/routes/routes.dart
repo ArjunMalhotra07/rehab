@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rehab/view/check_login.dart';
-import 'package:rehab/view/home_page.dart';
+import 'package:rehab/view/practice_screen.dart';
 import 'package:rehab/view/main_view.dart';
-import 'package:rehab/view/practice_page.dart';
+import 'package:rehab/view/home_page.dart';
 import 'package:rehab/view/profile_page.dart';
 import 'package:rehab/view/rehab_page.dart';
 import 'package:rehab/view/signup_screen.dart';
@@ -20,7 +20,7 @@ class Routes {
         return MaterialPageRoute(builder: ((context) => const SignupScreen()));
 
       case RoutesName.home:
-        return MaterialPageRoute(builder: ((context) => const HomePage()));
+        return MaterialPageRoute(builder: ((context) => HomePage()));
 
       case RoutesName.rehab:
         return MaterialPageRoute(builder: ((context) => const RehabPage()));
