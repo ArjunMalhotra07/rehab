@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
+import 'package:rehab/utils/routes/routes_name.dart';
 import 'package:rehab/utils/utils.dart';
 import 'package:rehab/view_model/firebase_calls.dart';
 
@@ -85,6 +86,18 @@ class SignupScreenState extends State<SignupScreen> {
                   }
                 },
               ),
+              SizedBoxWidget.box(25.0),
+              const Text("Already have an account?"),
+              SizedBoxWidget.box(25.0),
+              GestureDetector(
+                onTap: () {
+                  Navigator.popAndPushNamed(context, RoutesName.login);
+                },
+                child: const Text(
+                  "Log In",
+                  style: TextStyle(color: Colors.green),
+                ),
+              )
             ],
           ),
         ));

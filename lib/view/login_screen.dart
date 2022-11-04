@@ -93,7 +93,7 @@ class LoginScreenState extends State<LoginScreen> {
               SizedBoxWidget.box(25.0),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, RoutesName.signup);
+                  Navigator.popAndPushNamed(context, RoutesName.signup);
                 },
                 child: const Text(
                   "Sign Up",

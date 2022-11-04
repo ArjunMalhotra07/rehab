@@ -23,7 +23,7 @@ class FirebaseCalls {
         Utils.flushBarErrorMessage("Sign Up Successful", context,
             color: AppColors.greenColor);
         Timer(const Duration(seconds: 1), () {
-          Navigator.pushNamed(context, RoutesName.practice);
+          Navigator.popAndPushNamed(context, RoutesName.practice);
         });
       }).catchError((error, stackTrace) {
         if (kDebugMode) {
@@ -54,7 +54,7 @@ class FirebaseCalls {
         Utils.flushBarErrorMessage("Login Successful", context,
             color: AppColors.greenColor);
         Timer(const Duration(seconds: 1), () {
-          Navigator.pushNamed(context, RoutesName.practice);
+          Navigator.popAndPushNamed(context, RoutesName.practice);
         });
       }).catchError((error, stackTrace) {
         if (kDebugMode) {
@@ -81,7 +81,7 @@ class FirebaseCalls {
         Utils.flushBarErrorMessage("Logging out ... ", context,
             color: AppColors.redColor);
         Timer(const Duration(seconds: 1), () {
-          Navigator.pushNamed(context, RoutesName.login);
+          Navigator.popAndPushNamed(context, RoutesName.login);
         });
       });
     } on FirebaseAuthException catch (e) {
