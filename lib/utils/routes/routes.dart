@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:rehab/pages/check_login.dart';
-import 'package:rehab/pages/home_page.dart';
-import 'package:rehab/pages/practice_page.dart';
-import 'package:rehab/pages/profile_page.dart';
-import 'package:rehab/pages/rehab_page.dart';
-import 'package:rehab/pages/signup_screen.dart';
+import 'package:rehab/view/check_login.dart';
+import 'package:rehab/view/home_page.dart';
+import 'package:rehab/view/practice_page.dart';
+import 'package:rehab/view/profile_page.dart';
+import 'package:rehab/view/rehab_page.dart';
+import 'package:rehab/view/signup_screen.dart';
 import 'package:rehab/utils/routes/routes_name.dart';
 
-import '../../pages/login_screen.dart';
+import '../../view/login_screen.dart';
 
 class Routes {
   static MaterialPageRoute generateRoute(RouteSettings settings) {

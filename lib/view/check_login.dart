@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rehab/pages/login_screen.dart';
-import 'package:rehab/pages/practice_page.dart';
+import 'package:rehab/view/login_screen.dart';
+import 'package:rehab/view/practice_page.dart';
 
 class CheckLogin extends StatefulWidget {
   const CheckLogin({super.key});

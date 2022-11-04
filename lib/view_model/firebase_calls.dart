@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rehab/utils/colors.dart';
+import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
 
 import '../utils/routes/routes_name.dart';
@@ -22,7 +22,7 @@ class FirebaseCalls {
 
         Utils.flushBarErrorMessage("Sign Up Successful", context,
             color: AppColors.greenColor);
-        Timer(const Duration(seconds: 3), () {
+        Timer(const Duration(seconds: 1), () {
           Navigator.pushNamed(context, RoutesName.practice);
         });
       }).catchError((error, stackTrace) {
@@ -53,7 +53,7 @@ class FirebaseCalls {
         }
         Utils.flushBarErrorMessage("Login Successful", context,
             color: AppColors.greenColor);
-        Timer(const Duration(seconds: 3), () {
+        Timer(const Duration(seconds: 1), () {
           Navigator.pushNamed(context, RoutesName.practice);
         });
       }).catchError((error, stackTrace) {
@@ -80,7 +80,7 @@ class FirebaseCalls {
       firebaseObject.signOut().then((value) {
         Utils.flushBarErrorMessage("Logging out ... ", context,
             color: AppColors.redColor);
-        Timer(const Duration(seconds: 4), () {
+        Timer(const Duration(seconds: 1), () {
           Navigator.pushNamed(context, RoutesName.login);
         });
       });

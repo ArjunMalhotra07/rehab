@@ -2,7 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:rehab/utils/colors.dart';
+import 'package:rehab/utils/components/colors.dart';
 
 class Utils {
   static toastMessage(String msg) {
