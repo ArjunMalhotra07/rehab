@@ -1,10 +1,7 @@
-import 'dart:async';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rehab/utils/colors.dart';
 import 'package:rehab/utils/routes/routes_name.dart';
+import 'package:rehab/view_model/firebase_calls.dart';
 
 import '../utils/components/round_buttons.dart';
 import '../utils/utils.dart';
@@ -86,7 +83,8 @@ class LoginScreenState extends State<LoginScreen> {
                     if (kDebugMode) {
                       print("Log in");
                     }
-                    signIn();
+                    FirebaseCalls().signIn(
+                        _email.text.toString(), _pass.text.toString(), context);
                   }
                 },
               ),
@@ -105,34 +103,5 @@ class LoginScreenState extends State<LoginScreen> {
             ],
           ),
         ));
-  }
-
-  Future signIn() async {
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: _email.text, password: _pass.text)
-          .then((value) {
-        if (kDebugMode) {
-          print("Id $value");
-        }
-        Utils.flushBarErrorMessage("Login Successful", context,
-            color: AppColors.greenColor);
-        Timer(const Duration(seconds: 3), () {
-          Navigator.pushNamed(context, RoutesName.practice);
-        });
-      }).catchError((error, stackTrace) {
-        if (kDebugMode) {
-          print("Error");
-          print(error.message);
-        }
-        Utils.flushBarErrorMessage(error.message.toString(), context,
-            color: AppColors.redColor);
-      });
-    } on FirebaseAuthException catch (e) {
-      if (kDebugMode) {
-        print("Firebase Auth Exception Login");
-        print(e.message);
-      }
-    }
   }
 }
