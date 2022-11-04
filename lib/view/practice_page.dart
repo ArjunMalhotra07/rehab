@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
 import 'package:rehab/view_model/firebase_calls.dart';
@@ -15,6 +16,8 @@ class _PracticePageState extends State<PracticePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool loading = false;
+    final databaseRef = FirebaseDatabase.instance.ref('id');
     print(user?.email);
     print(user?.uid);
     return Scaffold(

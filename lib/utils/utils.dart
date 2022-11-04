@@ -15,7 +15,7 @@ class Utils {
         context: context,
         flushbar: Flushbar(
           message: msg,
-          backgroundColor: color ?? AppColors.redColor,
+          backgroundColor: color ?? Constants.redColor,
           // title: 'Warning!',
           duration: const Duration(seconds: 3),
           forwardAnimationCurve: Curves.easeInOut,

@@ -24,14 +24,14 @@ class FirebaseCalls {
           Navigator.popAndPushNamed(context, RoutesName.practice);
         });
         Utils.flushBarErrorMessage("Sign Up Successful", context,
-            color: AppColors.greenColor);
+            color: Constants.greenColor);
       }).catchError((error, stackTrace) {
         if (kDebugMode) {
           print("error");
           print(error.message);
         }
         Utils.flushBarErrorMessage(error.message.toString(), context,
-            color: AppColors.redColor);
+            color: Constants.redColor);
       });
     } on FirebaseAuthException catch (e) {
       if (kDebugMode) {
@@ -39,7 +39,7 @@ class FirebaseCalls {
       }
 
       Utils.flushBarErrorMessage("Error Signing in ... ", context,
-          color: AppColors.redColor);
+          color: Constants.redColor);
     }
   }
 
@@ -55,14 +55,14 @@ class FirebaseCalls {
           Navigator.popAndPushNamed(context, RoutesName.practice);
         });
         Utils.flushBarErrorMessage("Login Successful", context,
-            color: AppColors.blueColor);
+            color: Constants.blueColor);
       }).catchError((error, stackTrace) {
         if (kDebugMode) {
           print("Error");
           print(error.message);
         }
         Utils.flushBarErrorMessage(error.message.toString(), context,
-            color: AppColors.redColor);
+            color: Constants.redColor);
       });
     } on FirebaseAuthException catch (e) {
       if (kDebugMode) {
@@ -71,7 +71,7 @@ class FirebaseCalls {
       }
 
       Utils.flushBarErrorMessage("Error Logging In ... ", context,
-          color: AppColors.redColor);
+          color: Constants.redColor);
     }
   }
 
@@ -82,7 +82,7 @@ class FirebaseCalls {
           Navigator.popAndPushNamed(context, RoutesName.login);
         });
         Utils.flushBarErrorMessage("Logged out successfully ", context,
-            color: AppColors.blueColor);
+            color: Constants.blueColor);
       });
     } on FirebaseAuthException catch (e) {
       if (kDebugMode) {
@@ -90,7 +90,7 @@ class FirebaseCalls {
         print(e.message);
       }
       Utils.flushBarErrorMessage("Error Logging out ... ", context,
-          color: AppColors.redColor);
+          color: Constants.redColor);
     }
   }
 }
