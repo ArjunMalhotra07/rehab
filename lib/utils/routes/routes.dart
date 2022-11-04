@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rehab/pages/check_login.dart';
 import 'package:rehab/pages/home_page.dart';
 import 'package:rehab/pages/practice_page.dart';
 import 'package:rehab/pages/profile_page.dart';
@@ -28,6 +29,10 @@ class Routes {
 
       case RoutesName.profile:
         return MaterialPageRoute(builder: ((context) => const ProfilePage()));
+
+      case RoutesName.check:
+        return MaterialPageRoute(builder: ((context) => const CheckLogin()));
+
       default:
         return MaterialPageRoute(
             builder: ((context) => Scaffold(

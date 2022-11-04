@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/pages/login_screen.dart';
 import 'package:rehab/pages/practice_page.dart';
@@ -18,11 +18,19 @@ class _CheckLoginState extends State<CheckLogin> {
         body: StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        print(snapshot.data);
+        if (kDebugMode) {
+          print("Check Login Status Page");
+          print(snapshot.data);
+          print("");
+        }
         if (snapshot.hasData) {
-          return PracticePage();
+          return const PracticePage();
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Center(child: Text("Cannot Connect"));
         } else {
-          return LoginScreen();
+          return const LoginScreen();
         }
       },
     ));

@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:rehab/utils/components/round_buttons.dart';
+import 'package:rehab/view_model/firebase_calls.dart';
 
 class PracticePage extends StatefulWidget {
   const PracticePage({super.key});
@@ -14,11 +16,23 @@ class _PracticePageState extends State<PracticePage> {
   @override
   Widget build(BuildContext context) {
     print(user?.email);
+    print(user?.uid);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
       ),
-      body: const Center(child: Text("Practice Page")),
+      body: Column(
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Center(child: Text("Practice Page")),
+          RoundButton(
+              title: "Sign Out",
+              onPress: () {
+                FirebaseCalls().signOut(context);
+              })
+        ],
+      ),
     );
   }
 }

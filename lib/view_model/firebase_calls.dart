@@ -42,7 +42,7 @@ class FirebaseCalls {
 
   Future signIn(String email, pass, BuildContext context) async {
     try {
-      await FirebaseAuth.instance
+      await firebaseObject
           .signInWithEmailAndPassword(email: email, password: pass)
           .then((value) {
         if (kDebugMode) {
@@ -67,5 +67,15 @@ class FirebaseCalls {
         print(e.message);
       }
     }
+  }
+
+  Future signOut(BuildContext context) async {
+    firebaseObject.signOut().then((value) {
+      Utils.flushBarErrorMessage("Logging out ... ", context,
+          color: AppColors.redColor);
+      Timer(const Duration(seconds: 4), () {
+        Navigator.pushNamed(context, RoutesName.login);
+      });
+    });
   }
 }
