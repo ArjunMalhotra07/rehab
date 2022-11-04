@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/colors.dart';
@@ -10,8 +11,13 @@ import '../utils/routes/routes_name.dart';
 
 class FirebaseCalls {
   var firebaseObject = FirebaseAuth.instance;
+  final day = DateTime.now().day;
+  final month = DateTime.now().month;
+  final year = DateTime.now().year;
+  final minute = DateTime.now().minute;
+  final hour = DateTime.now().hour;
 
-  Future signUp(String email, pass, BuildContext context) async {
+  Future signUp(String email, pass, BuildContext context, String name) async {
     try {
       await firebaseObject
           .createUserWithEmailAndPassword(email: email, password: pass)
@@ -92,5 +98,10 @@ class FirebaseCalls {
       Utils.flushBarErrorMessage("Error Logging out ... ", context,
           color: Constants.redColor);
     }
+  }
+
+  void postDataToFirebase(String uid) {
+    final databaseRef = FirebaseDatabase.instance.ref('id/$uid/sessions');
+    return postDataToFirebase(uid);
   }
 }

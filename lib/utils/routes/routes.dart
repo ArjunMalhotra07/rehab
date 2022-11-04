@@ -25,7 +25,7 @@ class Routes {
         return MaterialPageRoute(builder: ((context) => const RehabPage()));
 
       case RoutesName.practice:
-        return MaterialPageRoute(builder: ((context) => const PracticePage()));
+        return MaterialPageRoute(builder: ((context) => PracticePage()));
 
       case RoutesName.profile:
         return MaterialPageRoute(builder: ((context) => const ProfilePage()));

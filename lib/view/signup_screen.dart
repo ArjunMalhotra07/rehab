@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
 import 'package:rehab/utils/routes/routes_name.dart';
 import 'package:rehab/utils/utils.dart';
@@ -18,6 +21,8 @@ class SignupScreenState extends State<SignupScreen> {
 
   final TextEditingController _pass = TextEditingController();
 
+  final TextEditingController _name = TextEditingController();
+
   @override
   void dispose() {
     super.dispose();
@@ -28,8 +33,15 @@ class SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final databaseRef = FirebaseDatabase.instance.ref('uids');
+    final day = DateTime.now().day;
+    final month = DateTime.now().month;
+    final year = DateTime.now().year;
+    final minute = DateTime.now().minute;
+    final hour = DateTime.now().hour;
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: true,
           title: const Text("Sign Up"),
           centerTitle: true,
         ),
@@ -39,10 +51,17 @@ class SignupScreenState extends State<SignupScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
+                controller: _name,
+                decoration: const InputDecoration(
+                    hintText: 'Name', icon: Icon(Icons.person)),
+              ),
+              SizedBoxWidget.box(10.0),
+              TextFormField(
                 controller: _email,
                 decoration: const InputDecoration(
                     hintText: 'Email', icon: Icon(Icons.mail)),
               ),
+              SizedBoxWidget.box(10.0),
               ValueListenableBuilder(
                   valueListenable: _obscureText,
                   builder: ((context, value, child) => TextFormField(
@@ -74,6 +93,8 @@ class SignupScreenState extends State<SignupScreen> {
                   } else if (_pass.text.isEmpty) {
                     Utils.flushBarErrorMessage(
                         "Password cannot be empty", context);
+                  } else if (_name.text.isEmpty) {
+                    Utils.flushBarErrorMessage("Name cannot be empty", context);
                   } else if (_pass.text.length < 6) {
                     Utils.flushBarErrorMessage(
                         "Password cannot be less than 6", context);
@@ -81,8 +102,8 @@ class SignupScreenState extends State<SignupScreen> {
                     if (kDebugMode) {
                       print("Sign Up");
                     }
-                    FirebaseCalls().signUp(
-                        _email.text.toString(), _pass.text.toString(), context);
+                    FirebaseCalls().signUp(_email.text.toString(),
+                        _pass.text.toString(), context, _name.text.toString());
                   }
                 },
               ),

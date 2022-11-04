@@ -24,7 +24,7 @@ class _CheckLoginState extends State<CheckLogin> {
           print("");
         }
         if (snapshot.hasData) {
-          return const PracticePage();
+          return PracticePage();
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
