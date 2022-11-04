@@ -4,31 +4,30 @@ import 'package:rehab/view/home_page.dart';
 import 'package:rehab/view/profile_page.dart';
 import 'package:rehab/view/rehab_page.dart';
 
-class BottomNavigationBarWidget extends StatefulWidget {
-  const BottomNavigationBarWidget({Key? key, required this.title})
-      : super(key: key);
-  final String title;
+class MainView extends StatefulWidget {
+  const MainView({Key? key, required this.name}) : super(key: key);
+  final String? name;
   @override
-  State<BottomNavigationBarWidget> createState() =>
-      _BottomNavigationBarWidgetState();
+  State<MainView> createState() => _MainViewState();
 }
 
-class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
+class _MainViewState extends State<MainView> {
   int currentIndex = 0;
-
-  final screens = [
-    HomePage(),
-    const RehabPage(),
-    PracticePage(),
-    const ProfilePage()
-  ];
   @override
   Widget build(BuildContext context) {
+    final screens = [
+      HomePage(
+        name: widget.name,
+      ),
+      const RehabPage(),
+      PracticePage(),
+      const ProfilePage()
+    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
         centerTitle: true,
-        title: Text(widget.title),
+        title: const Text("Main View"),
       ),
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(

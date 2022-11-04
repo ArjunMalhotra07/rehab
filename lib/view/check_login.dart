@@ -25,8 +25,8 @@ class _CheckLoginState extends State<CheckLogin> {
           print("");
         }
         if (snapshot.hasData) {
-          return const BottomNavigationBarWidget(
-            title: "Main View",
+          return const MainView(
+            name: "",
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

@@ -36,8 +36,8 @@ class Routes {
 
       case RoutesName.main:
         return MaterialPageRoute(
-            builder: ((context) => BottomNavigationBarWidget(
-                  title: "Main View",
+            builder: ((context) => const MainView(
+                  name: "",
                 )));
 
       default:
