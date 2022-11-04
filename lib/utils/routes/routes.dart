@@ -12,6 +12,18 @@ class Routes {
 
       case RoutesName.signup:
         return MaterialPageRoute(builder: ((context) => const SignupScreen()));
+
+      case RoutesName.home:
+        return MaterialPageRoute(builder: ((context) => const LoginScreen()));
+
+      case RoutesName.rehab:
+        return MaterialPageRoute(builder: ((context) => const LoginScreen()));
+
+      case RoutesName.practice:
+        return MaterialPageRoute(builder: ((context) => const LoginScreen()));
+
+      case RoutesName.profile:
+        return MaterialPageRoute(builder: ((context) => const LoginScreen()));
       default:
         return MaterialPageRoute(
             builder: ((context) => Scaffold(
