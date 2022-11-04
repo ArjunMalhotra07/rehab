@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
+import 'package:rehab/utils/utils.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -65,7 +66,22 @@ class SignupScreenState extends State<SignupScreen> {
               SizedBoxWidget.box(50.0),
               RoundButton(
                 title: 'Sign up',
-                onPress: () {},
+                onPress: () {
+                  if (_email.text.isEmpty) {
+                    Utils.flushBarErrorMessage(
+                        "Email cannot be empty", context);
+                  } else if (_pass.text.isEmpty) {
+                    Utils.flushBarErrorMessage(
+                        "Password cannot be empty", context);
+                  } else if (_pass.text.length < 6) {
+                    Utils.flushBarErrorMessage(
+                        "Password cannot be less than 6", context);
+                  } else {
+                    if (kDebugMode) {
+                      print("Sign Up");
+                    }
+                  }
+                },
               ),
             ],
           ),

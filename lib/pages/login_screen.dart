@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/routes/routes_name.dart';
 
 import '../utils/components/round_buttons.dart';
+import '../utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -63,20 +65,29 @@ class LoginScreenState extends State<LoginScreen> {
                             hintText: 'Password',
                             icon: const Icon(Icons.key)),
                       ))),
-              const SizedBox(
-                height: 50,
-              ),
+              SizedBoxWidget.box(50.0),
               RoundButton(
                 title: 'Login',
-                onPress: () {},
+                onPress: () {
+                  if (_email.text.isEmpty) {
+                    Utils.flushBarErrorMessage(
+                        "Email cannot be empty", context);
+                  } else if (_pass.text.isEmpty) {
+                    Utils.flushBarErrorMessage(
+                        "Password cannot be empty", context);
+                  } else if (_pass.text.length < 6) {
+                    Utils.flushBarErrorMessage(
+                        "Password cannot be less than 6", context);
+                  } else {
+                    if (kDebugMode) {
+                      print("Log in");
+                    }
+                  }
+                },
               ),
-              const SizedBox(
-                height: 25,
-              ),
+              SizedBoxWidget.box(25.0),
               const Text("Don't have an account?"),
-              const SizedBox(
-                height: 25,
-              ),
+              SizedBoxWidget.box(25.0),
               GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, RoutesName.signup);
