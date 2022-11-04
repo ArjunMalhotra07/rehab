@@ -51,43 +51,37 @@ class _PracticePageState extends State<PracticePage> {
     final now = DateTime.now();
     final databaseRef1 = FirebaseDatabase.instance.ref('uids/$uid/sessions');
 
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          RoundButton(
-              title: "Sign Out",
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        RoundButton(
+            title: "Sign Out",
+            onPress: () {
+              FirebaseCalls().signOut(context);
+            }),
+        SizedBoxWidget.box(50.0),
+        Center(
+          child: RoundButton(
+              title: "Add data",
               onPress: () {
-                FirebaseCalls().signOut(context);
-              }),
-          SizedBoxWidget.box(50.0),
-          Center(
-            child: RoundButton(
-                title: "Add data",
-                onPress: () {
+                if (kDebugMode) {
+                  print("Clicked");
+                }
+                databaseRef1
+                    .child("${now.day}-${now.month}-${now.year}")
+                    .update({'${now.hour}:${now.minute}': "Example"}).then(
+                        (value) {
+                  Utils.flushBarErrorMessage("Added Session", context,
+                      color: Constants.blueColor);
+                }).catchError((error, stackTrace) {
                   if (kDebugMode) {
-                    print("Clicked");
+                    print(error.toString());
                   }
-                  databaseRef1
-                      .child("${now.day}-${now.month}-${now.year}")
-                      .update({'${now.hour}:${now.minute}': "Example"}).then(
-                          (value) {
-                    Utils.flushBarErrorMessage("Added Session", context,
-                        color: Constants.blueColor);
-                  }).catchError((error, stackTrace) {
-                    if (kDebugMode) {
-                      print(error.toString());
-                    }
-                    Utils.flushBarErrorMessage(
-                        error.message.toString(), context);
-                  });
-                }),
-          ),
-        ],
-      ),
+                  Utils.flushBarErrorMessage(error.message.toString(), context);
+                });
+              }),
+        ),
+      ],
     );
   }
 }

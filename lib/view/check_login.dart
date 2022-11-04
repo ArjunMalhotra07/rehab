@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/view/login_screen.dart';
+import 'package:rehab/view/main_view.dart';
 import 'package:rehab/view/practice_page.dart';
 
 class CheckLogin extends StatefulWidget {
@@ -24,7 +25,9 @@ class _CheckLoginState extends State<CheckLogin> {
           print("");
         }
         if (snapshot.hasData) {
-          return PracticePage();
+          return const BottomNavigationBarWidget(
+            title: "Main View",
+          );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {

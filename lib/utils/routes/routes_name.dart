@@ -7,4 +7,6 @@ class RoutesName {
   static const String practice = 'practice_screen';
 
   static const String check = 'check_screen';
+
+  static const String main = 'main_screen';
 }

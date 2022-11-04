@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rehab/view/check_login.dart';
 import 'package:rehab/view/home_page.dart';
+import 'package:rehab/view/main_view.dart';
 import 'package:rehab/view/practice_page.dart';
 import 'package:rehab/view/profile_page.dart';
 import 'package:rehab/view/rehab_page.dart';
@@ -32,6 +33,12 @@ class Routes {
 
       case RoutesName.check:
         return MaterialPageRoute(builder: ((context) => const CheckLogin()));
+
+      case RoutesName.main:
+        return MaterialPageRoute(
+            builder: ((context) => BottomNavigationBarWidget(
+                  title: "Main View",
+                )));
 
       default:
         return MaterialPageRoute(

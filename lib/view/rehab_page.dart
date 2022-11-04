@@ -10,9 +10,6 @@ class RehabPage extends StatefulWidget {
 class _RehabPageState extends State<RehabPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: const Center(child: Text("Rehab Page")),
-    );
+    return const Center(child: Text("Rehab Page"));
   }
 }
