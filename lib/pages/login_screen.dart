@@ -82,6 +82,7 @@ class LoginScreenState extends State<LoginScreen> {
                     if (kDebugMode) {
                       print("Log in");
                     }
+                    Navigator.pushNamed(context, RoutesName.practice);
                   }
                 },
               ),

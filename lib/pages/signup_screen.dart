@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
+import 'package:rehab/utils/routes/routes_name.dart';
 import 'package:rehab/utils/utils.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -80,6 +81,7 @@ class SignupScreenState extends State<SignupScreen> {
                     if (kDebugMode) {
                       print("Sign Up");
                     }
+                    Navigator.pushNamed(context, RoutesName.practice);
                   }
                 },
               ),

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rehab/pages/home_page.dart';
+import 'package:rehab/pages/practice_page.dart';
+import 'package:rehab/pages/profile_page.dart';
+import 'package:rehab/pages/rehab_page.dart';
 import 'package:rehab/pages/signup_screen.dart';
 import 'package:rehab/utils/routes/routes_name.dart';
 
@@ -14,16 +18,16 @@ class Routes {
         return MaterialPageRoute(builder: ((context) => const SignupScreen()));
 
       case RoutesName.home:
-        return MaterialPageRoute(builder: ((context) => const LoginScreen()));
+        return MaterialPageRoute(builder: ((context) => const HomePage()));
 
       case RoutesName.rehab:
-        return MaterialPageRoute(builder: ((context) => const LoginScreen()));
+        return MaterialPageRoute(builder: ((context) => const RehabPage()));
 
       case RoutesName.practice:
-        return MaterialPageRoute(builder: ((context) => const LoginScreen()));
+        return MaterialPageRoute(builder: ((context) => const PracticePage()));
 
       case RoutesName.profile:
-        return MaterialPageRoute(builder: ((context) => const LoginScreen()));
+        return MaterialPageRoute(builder: ((context) => const ProfilePage()));
       default:
         return MaterialPageRoute(
             builder: ((context) => Scaffold(
