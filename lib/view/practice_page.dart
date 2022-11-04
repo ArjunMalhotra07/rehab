@@ -22,12 +22,18 @@ class _PracticePageState extends State<PracticePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("name --- ");
+    print(widget.name);
+    if (widget.name != null) {
+      addData();
+    }
+  }
 
+  addData() {
     var uid = user?.uid;
-
     final databaseRef = FirebaseDatabase.instance.ref('uids');
     print(uid);
-    databaseRef.child("$uid").update({"name": "Arjun"}).then((value) {
+    databaseRef.child("$uid").update({"name": widget.name}).then((value) {
       print("Added name");
       // Utils.flushBarErrorMessage("Added Session", context,
       //     color: Constants.blueColor);
@@ -41,23 +47,10 @@ class _PracticePageState extends State<PracticePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool loading = false;
     var uid = user?.uid;
+    final now = DateTime.now();
     final databaseRef1 = FirebaseDatabase.instance.ref('uids/$uid/sessions');
-    final day = DateTime.now().day;
-    final month = DateTime.now().month;
-    final year = DateTime.now().year;
-    final minute = DateTime.now().minute;
-    final hour = DateTime.now().hour;
-    // if (kDebugMode) {
-    //   print(user?.email);
-    //   print(user?.uid);
-    //   print(day);
-    //   print(month);
-    //   print(year);
-    //   print(minute);
-    //   print(hour);
-    // }
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -79,8 +72,9 @@ class _PracticePageState extends State<PracticePage> {
                     print("Clicked");
                   }
                   databaseRef1
-                      .child("$day-$month-$year")
-                      .update({'$hour:$minute': "Example"}).then((value) {
+                      .child("${now.day}-${now.month}-${now.year}")
+                      .update({'${now.hour}:${now.minute}': "Example"}).then(
+                          (value) {
                     Utils.flushBarErrorMessage("Added Session", context,
                         color: Constants.blueColor);
                   }).catchError((error, stackTrace) {

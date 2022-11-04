@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
+import 'package:rehab/view/practice_page.dart';
 
 import '../utils/routes/routes_name.dart';
 
@@ -27,7 +28,13 @@ class FirebaseCalls {
         }
 
         Timer(const Duration(seconds: 1), () {
-          Navigator.popAndPushNamed(context, RoutesName.practice);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PracticePage(
+                      name: name,
+                    )),
+          );
         });
         Utils.flushBarErrorMessage("Sign Up Successful", context,
             color: Constants.greenColor);
