@@ -2,18 +2,20 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:rehab/utils/colors.dart';
 
 class Utils {
   static toastMessage(String msg) {
     Fluttertoast.showToast(msg: msg, backgroundColor: Colors.lightGreen);
   }
 
-  static void flushBarErrorMessage(String msg, BuildContext context) {
+  static void flushBarErrorMessage(String msg, BuildContext context,
+      {Color? color}) {
     showFlushbar(
         context: context,
         flushbar: Flushbar(
           message: msg,
-          backgroundColor: Colors.red,
+          backgroundColor: color ?? AppColors.redColor,
           // title: 'Warning!',
           duration: const Duration(seconds: 3),
           forwardAnimationCurve: Curves.easeInOut,

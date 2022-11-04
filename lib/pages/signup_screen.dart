@@ -1,5 +1,9 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:rehab/utils/colors.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
 import 'package:rehab/utils/routes/routes_name.dart';
 import 'package:rehab/utils/utils.dart';
@@ -81,12 +85,42 @@ class SignupScreenState extends State<SignupScreen> {
                     if (kDebugMode) {
                       print("Sign Up");
                     }
-                    Navigator.pushNamed(context, RoutesName.practice);
+                    signUp();
                   }
                 },
               ),
             ],
           ),
         ));
+  }
+
+  Future signUp() async {
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: _email.text, password: _pass.text)
+          .then((value) {
+        if (kDebugMode) {
+          print("Id ${value.user?.email}");
+        }
+
+        Utils.flushBarErrorMessage("Sign Up Successful", context,
+            color: AppColors.greenColor);
+        Timer(const Duration(seconds: 3), () {
+          Navigator.pushNamed(context, RoutesName.practice);
+        });
+      }).catchError((error, stackTrace) {
+        if (kDebugMode) {
+          print("error");
+          print(error.message);
+        }
+        Utils.flushBarErrorMessage(error.message.toString(), context,
+            color: AppColors.redColor);
+      });
+    } on FirebaseAuthException catch (e) {
+      if (kDebugMode) {
+        print(e.message);
+      }
+    }
   }
 }
