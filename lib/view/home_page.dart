@@ -20,10 +20,11 @@ class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    print("name --- ");
-    print(widget.name);
+    if (kDebugMode) {
+      print("name --- ");
+      print(widget.name);
+    }
     if (widget.name != null) {
       addData();
     }
@@ -49,6 +50,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var uid = user?.uid;
     final now = DateTime.now();
+    var day = now.day;
+    print(now.toLocal());
     final databaseRef1 = FirebaseDatabase.instance.ref('uids/$uid/sessions');
 
     return Column(
@@ -68,9 +71,10 @@ class _HomePageState extends State<HomePage> {
                   print("Clicked");
                 }
                 databaseRef1
-                    .child("${now.day}-${now.month}-${now.year}")
-                    .update({'${now.hour}:${now.minute}': "Example"}).then(
-                        (value) {
+                    .child("${day + 1}-${now.month}-${now.year}")
+                    .update({
+                  '${now.hour}:${now.minute}': "Example${now.microsecond}"
+                }).then((value) {
                   Utils.flushBarErrorMessage("Added Session", context,
                       color: Constants.blueColor);
                 }).catchError((error, stackTrace) {

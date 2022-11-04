@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/view/practice_screen.dart';
 import 'package:rehab/view/home_page.dart';
 import 'package:rehab/view/profile_page.dart';
@@ -24,10 +25,13 @@ class _MainViewState extends State<MainView> {
       const ProfilePage()
     ];
     return Scaffold(
+      backgroundColor: Constants.whiteColor,
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        automaticallyImplyLeading: false,
+        backgroundColor: Constants.whiteColor,
+        elevation: 0,
         centerTitle: true,
-        title: const Text("Main View"),
+        title: const Text(""),
       ),
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
