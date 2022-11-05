@@ -114,6 +114,7 @@ class _RehabPageState extends State<RehabPage> {
                 )),
             FirebaseAnimatedList(
                 shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
                 query: ref,
                 itemBuilder: ((context, snapshot, animation, index) {
                   var object = snapshot.children; //Every time stamp

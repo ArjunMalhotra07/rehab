@@ -94,12 +94,13 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:rehab/utils/components/card.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
-import 'package:rehab/view_model/firebase_calls.dart';
 
 import '../utils/components/round_buttons.dart';
+import '../view_model/getter.dart';
 
 class HomePage extends StatefulWidget {
   String? name;
@@ -121,6 +122,7 @@ class _HomePageState extends State<HomePage> {
     if (widget.name != null || widget.name != "") {
       addData();
     }
+    ListenFirebase().func();
   }
 
   addData() {
@@ -138,26 +140,15 @@ class _HomePageState extends State<HomePage> {
       }
       Utils.flushBarErrorMessage(error.message.toString(), context);
     });
-
-    print("hlo");
-    FirebaseAnimatedList(
-        query: ref,
-        itemBuilder: ((context, snapshot, animation, index) {
-          var object = snapshot.children; //Every time stamp
-          int length = object.length;
-          debugPrint("Key --> ${snapshot.key}");
-          debugPrint("length of Object --> ${length.toString()}");
-          for (final timeStamp in object) {
-            debugPrint(timeStamp.key);
-          }
-          debugPrint("Terminate");
-          debugPrint("");
-          return Container();
-        }));
   }
 
   @override
   Widget build(BuildContext context) {
+    final authViewModel = ListenFirebase().counter;
+
+    final ValueNotifier<int> _counterVar = ValueNotifier<int>(0);
+
+    ValueNotifier<int> data = ValueNotifier(ListenFirebase().counter);
     var uid = user?.uid;
     final now = DateTime.now();
     var day = now.day;
@@ -167,10 +158,8 @@ class _HomePageState extends State<HomePage> {
       print(now.toLocal());
       print(now2);
     }
+    int _counter = 0;
     final databaseRef1 = FirebaseDatabase.instance.ref('uids/$uid/sessions');
-
-    final childrenWidget = <Widget>[];
-    final childrenWidget1 = <Widget>[];
     final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions');
     return Scaffold(
       backgroundColor: Constants.whiteColor,
@@ -214,9 +203,17 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Image.asset('assets/tick.png',
                                   height: 50, fit: BoxFit.fill),
-                              TextStyleWidget.textStyle(
-                                  "Completed \n2 sessions", 15,
-                                  c: Constants.blackShade1),
+                              ValueListenableBuilder(
+                                valueListenable: data,
+                                builder: (BuildContext context, int value,
+                                    Widget? child) {
+                                  // This builder will only get called when the _counter
+                                  // is updated.
+                                  return TextStyleWidget.textStyle(
+                                      "Completed \n$value sessions", 15,
+                                      c: Constants.blackShade1);
+                                },
+                              ),
                               const Spacer(),
                               Image.asset('assets/arrow.png',
                                   height: 50, fit: BoxFit.fill),
@@ -229,26 +226,45 @@ class _HomePageState extends State<HomePage> {
                       ),
                     )),
                 SizedBoxWidget.box(35.0),
-                FirebaseAnimatedList(
-                    shrinkWrap: true,
-                    query: ref,
-                    itemBuilder: ((context, snapshot, animation, index) {
-                      var object = snapshot.children; //Every time stamp
-                      int length = object.length;
-                      debugPrint("Key --> ${snapshot.key}");
-                      debugPrint("length of Object --> ${length.toString()}");
-                      final childrenWidget = <Widget>[];
-                      for (final timeStamp in object) {
-                        debugPrint(timeStamp.key);
-                        childrenWidget.add(list(
-                            timeStamp.key.toString(), snapshot.key.toString()));
-                      }
-                      debugPrint("Terminate");
-                      debugPrint("");
-                      return Column(
-                        children: childrenWidget,
-                      );
-                    })),
+                Padding(
+                  padding: const EdgeInsets.only(left: 25.0),
+                  child: FirebaseAnimatedList(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      query: ref,
+                      itemBuilder: ((context, snapshot, animation, index) {
+                        var object = snapshot.children; //Every time stamp
+                        int length = object.length;
+                        debugPrint("Key --> ${snapshot.key}");
+                        debugPrint("length of Object --> ${length.toString()}");
+                        final childrenWidget = <Widget>[];
+                        for (final timeStamp in object) {
+                          debugPrint(timeStamp.key);
+                          _counter++;
+                          var assetUrl = '';
+                          if (_counter % 3 == 0) {
+                            assetUrl = 'assets/woman1.jpg';
+                          } else if (_counter % 3 == 1) {
+                            assetUrl = 'assets/woman2.jpg';
+                          } else {
+                            assetUrl = 'assets/woman3.jpeg';
+                          }
+                          childrenWidget.add(CardWidget(
+                            title: "Session $_counter",
+                            height: 170.0,
+                            width: 450.0,
+                            time: "Performed at \n${timeStamp.key.toString()}",
+                            imageUrl: assetUrl,
+                          ));
+                        }
+                        debugPrint("Terminate");
+                        debugPrint(_counter.toString());
+                        debugPrint("");
+                        return Column(
+                          children: childrenWidget,
+                        );
+                      })),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 25.0),
                   child: ListView.builder(
@@ -268,7 +284,7 @@ class _HomePageState extends State<HomePage> {
                           title: "Session ${index + 1}",
                           height: 170.0,
                           width: 100.0,
-                          time: "Peformed at \n8:12 AM",
+                          time: "**********",
                           imageUrl: assetUrl,
                         );
                       })),

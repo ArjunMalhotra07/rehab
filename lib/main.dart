@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rehab/utils/routes/routes.dart';
 import 'package:rehab/utils/routes/routes_name.dart';
+import 'package:rehab/view_model/getter.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,14 +15,19 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ListenFirebase()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        initialRoute: RoutesName.check,
+        onGenerateRoute: Routes.generateRoute,
       ),
-      initialRoute: RoutesName.check,
-      onGenerateRoute: Routes.generateRoute,
     );
   }
 }
