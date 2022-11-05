@@ -20,20 +20,8 @@ class _RehabPageState extends State<RehabPage> {
   final ref = FirebaseDatabase.instance.ref('');
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final childrenWidgetList = <Widget>[];
-
-    // final childrenWidget = <Widget>[];
     var uid = user?.uid;
-    final testList = <String>[];
     int counter = 0;
     final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions');
     return Scaffold(
@@ -67,11 +55,11 @@ class _RehabPageState extends State<RehabPage> {
             ),
             SizedBoxWidget.box(5.0),
             Container(
-                height: 85,
+                height: 90,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
-                  color: Colors.grey.shade400,
+                  color: Colors.grey.shade200,
                 ),
                 child: Center(
                   child: Padding(
@@ -81,13 +69,14 @@ class _RehabPageState extends State<RehabPage> {
                       children: [
                         const SizedBox(width: 5),
                         Column(
-                          children: const [
-                            Text(
-                              "Total Sessions",
-                              style: TextStyle(
-                                  color: Constants.blackColor, fontSize: 15),
-                            ),
-                            Text("16")
+                          children: [
+                            TextStyleWidget.textStyle("Total sessions", 15),
+                            Row(
+                              children: [
+                                Image.asset('assets/dumb.png'),
+                                TextStyleWidget.textStyle("16", 30),
+                              ],
+                            )
                           ],
                         ),
                         const SizedBox(width: 5),
@@ -98,13 +87,14 @@ class _RehabPageState extends State<RehabPage> {
                         ),
                         const SizedBox(width: 5),
                         Column(
-                          children: const [
-                            Text(
-                              "Total time",
-                              style: TextStyle(
-                                  color: Constants.blackColor, fontSize: 15),
-                            ),
-                            Text("16")
+                          children: [
+                            TextStyleWidget.textStyle("Total time", 15),
+                            Row(
+                              children: [
+                                Image.asset('assets/hour.png'),
+                                TextStyleWidget.textStyle("16", 30),
+                              ],
+                            )
                           ],
                         ),
                         const SizedBox(width: 5),
@@ -112,6 +102,7 @@ class _RehabPageState extends State<RehabPage> {
                     ),
                   ),
                 )),
+            SizedBoxWidget.box(20.0),
             FirebaseAnimatedList(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
@@ -124,9 +115,15 @@ class _RehabPageState extends State<RehabPage> {
                   final childrenWidget = <Widget>[];
                   for (final timeStamp in object) {
                     counter += 1;
+                    var assetUrl = '';
+                    if (counter % 2 == 0) {
+                      assetUrl = 'assets/pic1.png';
+                    } else {
+                      assetUrl = 'assets/pic2.png';
+                    }
                     debugPrint(timeStamp.key);
-                    childrenWidget.add(list(
-                        timeStamp.key.toString(), snapshot.key.toString()));
+                    childrenWidget.add(list(timeStamp.key.toString(),
+                        snapshot.key.toString(), assetUrl));
                   }
                   debugPrint("Terminate");
                   debugPrint("");
@@ -140,16 +137,54 @@ class _RehabPageState extends State<RehabPage> {
     );
   }
 
-  list(String title, subtitle) {
-    return ListTile(
-      leading: ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
-          child: Image.asset(
-            'assets/pic1.png',
-          )),
-      title: Text(title),
-      subtitle: Text(subtitle),
-      trailing: const Text("View Results"),
+  list(String title, subtitle, url) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20.0),
+      child: Container(
+        child: Row(children: [
+          ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.asset(
+                url,
+                height: 70,
+              )),
+          SizedBox(
+            width: 30,
+          ),
+          Column(
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.timer_sharp,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  TextStyleWidget.textStyle(title, 16, c: Constants.blackShade),
+                ],
+              ),
+              SizedBoxWidget.box(5.0),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.calendar_today,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  TextStyleWidget.textStyle(subtitle, 14,
+                      c: Constants.blackShade),
+                ],
+              ),
+            ],
+          ),
+          Spacer(),
+          const Text("View Results")
+        ]),
+      ),
     );
   }
 }
