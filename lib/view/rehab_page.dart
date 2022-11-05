@@ -135,11 +135,9 @@ class _RehabPageState extends State<RehabPage> {
                     ),
                   ),
                 )),
-            SizedBoxWidget.box(30.0),
             Expanded(
               child: FirebaseAnimatedList(
                   query: ref,
-                  // reverse: true,
                   itemBuilder: ((context, snapshot, animation, index) {
                     var object = snapshot.children; //Every time stamp
                     int length = object.length;
@@ -148,12 +146,9 @@ class _RehabPageState extends State<RehabPage> {
                     for (final timeStamp in object) {
                       counter += 1;
                       debugPrint(timeStamp.key);
-                      testList.add(timeStamp.key.toString());
-                      childrenWidget.add(list(timeStamp.key.toString()));
+                      childrenWidget.add(list(
+                          snapshot.key.toString(), timeStamp.key.toString()));
                     }
-
-                    // debugPrint(testList.toString());
-                    debugPrint(counter.toString());
                     debugPrint("Terminate");
                     debugPrint("");
                     return Container();
@@ -172,13 +167,16 @@ class _RehabPageState extends State<RehabPage> {
     );
   }
 
-  list(String s) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0, top: 12),
-      child: ListTile(
-        leading: Image.asset('assets/pic1.png'),
-        title: Text(s),
-      ),
+  list(String title, subtitle) {
+    return ListTile(
+      leading: ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Image.asset(
+            'assets/pic1.png',
+          )),
+      title: Text(title),
+      subtitle: Text(subtitle),
+      trailing: const Text("View Results"),
     );
   }
 }
