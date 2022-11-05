@@ -90,8 +90,10 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:rehab/utils/components/card.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
@@ -124,6 +126,7 @@ class _HomePageState extends State<HomePage> {
   addData() {
     var uid = user?.uid;
     final databaseRef = FirebaseDatabase.instance.ref('uids');
+    final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions');
     print(uid);
     databaseRef.child("$uid").update({"name": widget.name}).then((value) {
       print("Added name");
@@ -135,6 +138,22 @@ class _HomePageState extends State<HomePage> {
       }
       Utils.flushBarErrorMessage(error.message.toString(), context);
     });
+
+    print("hlo");
+    FirebaseAnimatedList(
+        query: ref,
+        itemBuilder: ((context, snapshot, animation, index) {
+          var object = snapshot.children; //Every time stamp
+          int length = object.length;
+          debugPrint("Key --> ${snapshot.key}");
+          debugPrint("length of Object --> ${length.toString()}");
+          for (final timeStamp in object) {
+            debugPrint(timeStamp.key);
+          }
+          debugPrint("Terminate");
+          debugPrint("");
+          return Container();
+        }));
   }
 
   @override
@@ -142,9 +161,17 @@ class _HomePageState extends State<HomePage> {
     var uid = user?.uid;
     final now = DateTime.now();
     var day = now.day;
-    print(now.toLocal());
+    final now2 = DateFormat('hh:mm a').format(DateTime.now());
+
+    if (kDebugMode) {
+      print(now.toLocal());
+      print(now2);
+    }
     final databaseRef1 = FirebaseDatabase.instance.ref('uids/$uid/sessions');
 
+    final childrenWidget = <Widget>[];
+    final childrenWidget1 = <Widget>[];
+    final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions');
     return Scaffold(
       backgroundColor: Constants.whiteColor,
       appBar: AppBar(
@@ -202,6 +229,34 @@ class _HomePageState extends State<HomePage> {
                       ),
                     )),
                 SizedBoxWidget.box(35.0),
+                FirebaseAnimatedList(
+                    shrinkWrap: true,
+                    query: ref,
+                    itemBuilder: ((context, snapshot, animation, index) {
+                      var object = snapshot.children; //Every time stamp
+                      for (final timeStamp in object) {
+                        debugPrint(timeStamp.key);
+                        childrenWidget.add(list(
+                            timeStamp.key.toString(), snapshot.key.toString()));
+                        childrenWidget1.add(CardWidget(
+                          title: "Session ${index + 1}",
+                          height: 170.0,
+                          width: 100.0,
+                          time: "Peformed at \n${timeStamp.key.toString()}",
+                          imageUrl: 'assets/woman1.jpg',
+                        ));
+                      }
+                      return Container();
+                    })),
+                Column(
+                  children: childrenWidget,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 100.0),
+                  child: Column(
+                    children: childrenWidget1,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 25.0),
                   child: ListView.builder(
@@ -226,10 +281,6 @@ class _HomePageState extends State<HomePage> {
                         );
                       })),
                 ),
-                // Stepper(
-                //     margin: const EdgeInsets.only(right: 150.0),
-                //     type: StepperType.vertical,
-                //     steps: getSteps()),
                 SizedBoxWidget.box(45.0)
               ]),
             ),
@@ -243,9 +294,8 @@ class _HomePageState extends State<HomePage> {
                   if (kDebugMode) {
                     print("Clicked");
                   }
-                  databaseRef1.child("$day-${now.month}-${now.year}").update({
-                    '${now.hour}:${now.minute}': "Example${now.microsecond}"
-                  }).then((value) {
+                  databaseRef1.child("$day-${now.month}-${now.year}").update(
+                      {now2: "Example${now.microsecond}"}).then((value) {
                     Utils.flushBarErrorMessage("Added Session", context,
                         color: Constants.blueColor);
                   }).catchError((error, stackTrace) {
@@ -265,19 +315,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<Step> getSteps() {
-    return [
-      const Step(
-          title: Text("A"),
-          content: CardWidget(
-            title: "Session 1",
-            height: 170.0,
-            width: 200.0,
-            time: "Peformed at \n8:12 AM",
-            // imageUrl: "assetUrl",
+  list(String title, subtitle) {
+    return ListTile(
+      leading: ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Image.asset(
+            'assets/pic1.png',
           )),
-      Step(title: Text("B"), content: Container()),
-      Step(title: Text("C"), content: Container())
-    ];
+      title: Text(title),
+      subtitle: Text(subtitle),
+      trailing: const Text("View Results"),
+    );
   }
 }

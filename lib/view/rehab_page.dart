@@ -33,112 +33,98 @@ class _RehabPageState extends State<RehabPage> {
         backgroundColor: Constants.whiteColor,
         toolbarHeight: 0,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30.0, right: 30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Padding(
+        padding: const EdgeInsets.only(left: 30.0, right: 30),
+        child: ListView(
+          children: [
+            const Text(
+              "Rehab Programme",
+              style: TextStyle(color: Constants.blackColor, fontSize: 30),
+            ),
+            SizedBoxWidget.box(10.0),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset('assets/doctor.png')),
+            SizedBoxWidget.box(10.0),
+            Row(
               children: [
                 const Text(
-                  "Rehab Programme",
-                  style: TextStyle(color: Constants.blackColor, fontSize: 30),
+                  "History",
+                  style: TextStyle(color: Constants.blackColor, fontSize: 22),
                 ),
-                SizedBoxWidget.box(10.0),
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.asset('assets/doctor.png')),
-                SizedBoxWidget.box(10.0),
-                Row(
-                  children: [
-                    const Text(
-                      "History",
-                      style:
-                          TextStyle(color: Constants.blackColor, fontSize: 22),
-                    ),
-                    const Spacer(),
-                    Image.asset('assets/funnel.png',
-                        height: 30, fit: BoxFit.fill),
-                  ],
-                ),
-                SizedBoxWidget.box(5.0),
-                Container(
-                    height: 85,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      color: Colors.grey.shade400,
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 25.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const SizedBox(width: 5),
-                            Column(
-                              children: const [
-                                Text(
-                                  "Total Sessions",
-                                  style: TextStyle(
-                                      color: Constants.blackColor,
-                                      fontSize: 15),
-                                ),
-                                Text("16")
-                              ],
-                            ),
-                            const SizedBox(width: 5),
-                            Container(
-                              width: 1,
-                              height: 25,
-                              color: Constants.blackColor,
-                            ),
-                            const SizedBox(width: 5),
-                            Column(
-                              children: const [
-                                Text(
-                                  "Total time",
-                                  style: TextStyle(
-                                      color: Constants.blackColor,
-                                      fontSize: 15),
-                                ),
-                                Text("16")
-                              ],
-                            ),
-                            const SizedBox(width: 5),
-                          ],
-                        ),
-                      ),
-                    )),
-                Expanded(
-                  child: FirebaseAnimatedList(
-                      query: ref,
-                      itemBuilder: ((context, snapshot, animation, index) {
-                        var object = snapshot.children; //Every time stamp
-                        int length = object.length;
-                        debugPrint("Key --> ${snapshot.key}");
-                        debugPrint("length of Object --> ${length.toString()}");
-                        for (final timeStamp in object) {
-                          counter += 1;
-                          debugPrint(timeStamp.key);
-                          childrenWidget.add(list(timeStamp.key.toString(),
-                              snapshot.key.toString()));
-                        }
-                        debugPrint("Terminate");
-                        debugPrint("");
-                        return Container();
-                      })),
-                ),
-                SingleChildScrollView(
-                  child: Column(
-                    children: childrenWidget,
-                  ),
-                )
+                const Spacer(),
+                Image.asset('assets/funnel.png', height: 30, fit: BoxFit.fill),
               ],
             ),
-          ),
+            SizedBoxWidget.box(5.0),
+            Container(
+                height: 85,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0),
+                  color: Colors.grey.shade400,
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const SizedBox(width: 5),
+                        Column(
+                          children: const [
+                            Text(
+                              "Total Sessions",
+                              style: TextStyle(
+                                  color: Constants.blackColor, fontSize: 15),
+                            ),
+                            Text("16")
+                          ],
+                        ),
+                        const SizedBox(width: 5),
+                        Container(
+                          width: 1,
+                          height: 25,
+                          color: Constants.blackColor,
+                        ),
+                        const SizedBox(width: 5),
+                        Column(
+                          children: const [
+                            Text(
+                              "Total time",
+                              style: TextStyle(
+                                  color: Constants.blackColor, fontSize: 15),
+                            ),
+                            Text("16")
+                          ],
+                        ),
+                        const SizedBox(width: 5),
+                      ],
+                    ),
+                  ),
+                )),
+            FirebaseAnimatedList(
+                shrinkWrap: true,
+                query: ref,
+                itemBuilder: ((context, snapshot, animation, index) {
+                  var object = snapshot.children; //Every time stamp
+                  int length = object.length;
+                  debugPrint("Key --> ${snapshot.key}");
+                  debugPrint("length of Object --> ${length.toString()}");
+                  for (final timeStamp in object) {
+                    counter += 1;
+                    debugPrint(timeStamp.key);
+                    childrenWidget.add(list(
+                        timeStamp.key.toString(), snapshot.key.toString()));
+                  }
+                  debugPrint("Terminate");
+                  debugPrint("");
+                  return Container();
+                })),
+            Column(
+              children: childrenWidget,
+            )
+          ],
         ),
       ),
     );

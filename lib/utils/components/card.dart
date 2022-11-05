@@ -22,6 +22,7 @@ class CardWidget extends StatefulWidget {
 class _CardWidgetState extends State<CardWidget> {
   @override
   Widget build(BuildContext context) {
+    print("${widget.height}, ${widget.width}");
     return Padding(
       padding: const EdgeInsets.only(bottom: 30.0),
       child: Container(
