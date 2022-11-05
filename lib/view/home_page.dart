@@ -92,6 +92,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:rehab/utils/components/card.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
 import 'package:rehab/view_model/firebase_calls.dart';
@@ -155,51 +156,77 @@ class _HomePageState extends State<HomePage> {
             const EdgeInsets.only(top: 25.0, left: 35, right: 35, bottom: 10),
         child: Stack(
           children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              TextStyleWidget.textStyle("Good Morning \nJane", 35,
-                  c: Constants.blackShade),
-              SizedBoxWidget.box(15.0),
-              Container(
-                  decoration: BoxDecoration(
-                      color: Constants.whiteColor,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Constants.greyColor, width: 3)),
-                  height: 150,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 7.0, horizontal: 15),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            TextStyleWidget.textStyle("Today's Progress", 23,
-                                c: Constants.blackShade1),
-                            const Spacer(),
-                            TextStyleWidget.textStyle("50%", 22,
-                                c: Constants.blueColor),
-                          ],
-                        ),
-                        const Spacer(),
-                        Row(
-                          children: [
-                            Image.asset('assets/tick.png',
-                                height: 50, fit: BoxFit.fill),
-                            TextStyleWidget.textStyle(
-                                "Completed \n2 sessions", 15,
-                                c: Constants.blackShade1),
-                            const Spacer(),
-                            Image.asset('assets/arrow.png',
-                                height: 50, fit: BoxFit.fill),
-                            TextStyleWidget.textStyle(
-                                " Pending \n2 sessions", 15,
-                                c: Constants.blackShade1),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )),
-              Spacer(),
-            ]),
+            Container(
+              child: ListView(children: [
+                TextStyleWidget.textStyle("Good Morning \nJane", 35,
+                    c: Constants.blackShade),
+                SizedBoxWidget.box(15.0),
+                Container(
+                    decoration: BoxDecoration(
+                        color: Constants.whiteColor,
+                        borderRadius: BorderRadius.circular(10),
+                        border:
+                            Border.all(color: Constants.greyColor, width: 3)),
+                    height: 150,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 7.0, horizontal: 15),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              TextStyleWidget.textStyle("Today's Progress", 23,
+                                  c: Constants.blackShade1),
+                              const Spacer(),
+                              TextStyleWidget.textStyle("50%", 22,
+                                  c: Constants.blueColor),
+                            ],
+                          ),
+                          const Spacer(),
+                          Row(
+                            children: [
+                              Image.asset('assets/tick.png',
+                                  height: 50, fit: BoxFit.fill),
+                              TextStyleWidget.textStyle(
+                                  "Completed \n2 sessions", 15,
+                                  c: Constants.blackShade1),
+                              const Spacer(),
+                              Image.asset('assets/arrow.png',
+                                  height: 50, fit: BoxFit.fill),
+                              TextStyleWidget.textStyle(
+                                  " Pending \n2 sessions", 15,
+                                  c: Constants.blackShade1),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )),
+                SizedBoxWidget.box(35.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 25.0),
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: 10,
+                      itemBuilder: ((context, index) {
+                        var assetUrl = '';
+                        if (index % 2 == 0) {
+                          assetUrl = 'assets/woman1.jpg';
+                        } else {
+                          assetUrl = 'assets/woman2.jpg';
+                        }
+                        return CardWidget(
+                          title: "Session ${index + 1}",
+                          height: 170.0,
+                          width: 100.0,
+                          time: "Peformed at \n8:12 AM",
+                          imageUrl: assetUrl,
+                        );
+                      })),
+                ),
+                SizedBoxWidget.box(45.0)
+              ]),
+            ),
             Positioned(
               top: MediaQuery.of(context).size.height * .69,
               child: Center(

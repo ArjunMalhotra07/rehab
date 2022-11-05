@@ -16,4 +16,6 @@ class Constants {
   static const Color redColor = Colors.red;
 
   static const Color greyColor = Colors.grey;
+
+  static Color lightGreyColor = Colors.grey.shade300;
 }
