@@ -1,0 +1,34 @@
+FirebaseAnimatedList(
+                query: ref,
+                itemBuilder: ((context, snapshot, animation, index) {
+                  // var object = (snapshot.children)[index];
+                  var object = snapshot.children;
+                  var length = object.length;
+                  var key = snapshot.key;
+
+                  // debugPrint("$length");
+                  // debugPrint(object.toString());
+                  // debugPrint(key.toString());
+
+                  for (var i = 0; i < length; i++) {
+                    print(i);
+                    for (final jsonObject in object) {
+                      debugPrint(jsonObject.key);
+                      debugPrint(object.length.toString());
+                      debugPrint(jsonObject.key.toString());
+
+                      return Column(
+                        children: [
+                          ListTile(
+                            leading: Image.asset('assets/pic1.png'),
+                            title: Text(snapshot.key.toString()),
+                            subtitle: Text(jsonObject.key.toString()),
+                          ),
+                          SizedBoxWidget.box(15.0)
+                        ],
+                      );
+                    }
+                  }
+
+                  return Container();
+                })),

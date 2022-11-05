@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -20,42 +22,44 @@ class _RehabPageState extends State<RehabPage> {
   @override
   Widget build(BuildContext context) {
     var uid = user?.uid;
+    final childrenWidget = <Widget>[];
+    int counter = 0;
     final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions');
-    ref.onValue.listen((event) {
-      debugPrint("Inside Listener");
-      for (final child in event.snapshot.children) {
-        // Handle the post.
-        var dataObject = child.value;
-        var key = child.key.toString();
-        debugPrint(dataObject.toString());
-        debugPrint(key);
-      }
-      Map dataObject = {
-        "5-11-2022": {
-          "2:9": "Example728",
-          "3:15": "Example644",
-          "1:45": "Example",
-          "2:11": "Example184",
-          "2:7": "Example",
-        },
-        "6-11-2022": {
-          "2:16": "Example440",
-          "2:26": "Example124",
-          "2:22": "Example515",
-        },
-      };
+    // ref.onValue.listen((event) {
+    //   debugPrint("Inside Listener");
+    //   for (final child in event.snapshot.children) {
+    //     // Handle the post.
+    //     var dataObject = child.value;
+    //     var key = child.key.toString();
+    //     debugPrint(dataObject.toString());
+    //     debugPrint(key);
+    //   }
+    //   Map dataObject = {
+    //     "5-11-2022": {
+    //       "2:9": "Example728",
+    //       "3:15": "Example644",
+    //       "1:45": "Example",
+    //       "2:11": "Example184",
+    //       "2:7": "Example",
+    //     },
+    //     "6-11-2022": {
+    //       "2:16": "Example440",
+    //       "2:26": "Example124",
+    //       "2:22": "Example515",
+    //     },
+    //   };
 
-      for (MapEntry item in dataObject.entries) {
-        String day = item.key.toString();
-        debugPrint("day: $day");
-        for (MapEntry item2 in dataObject[item.key].entries) {
-          String hour = item2.key.toString();
-          String value = item2.value.toString();
-          debugPrint("hour: $hour value: $value");
-        }
-      }
-      debugPrint("");
-    }, onError: (error) {});
+    //   for (MapEntry item in dataObject.entries) {
+    //     String day = item.key.toString();
+    //     debugPrint("day: $day");
+    //     for (MapEntry item2 in dataObject[item.key].entries) {
+    //       String hour = item2.key.toString();
+    //       String value = item2.value.toString();
+    //       debugPrint("hour: $hour value: $value");
+    //     }
+    //   }
+    //   debugPrint("");
+    // }, onError: (error) {});
     return Padding(
       padding: const EdgeInsets.only(left: 30.0, right: 30),
       child: Column(
@@ -95,7 +99,7 @@ class _RehabPageState extends State<RehabPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Column(
                         children: const [
                           Text(
@@ -106,13 +110,13 @@ class _RehabPageState extends State<RehabPage> {
                           Text("16")
                         ],
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Container(
                         width: 1,
                         height: 25,
                         color: Constants.blackColor,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Column(
                         children: const [
                           Text(
@@ -123,7 +127,7 @@ class _RehabPageState extends State<RehabPage> {
                           Text("16")
                         ],
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                     ],
                   ),
                 ),
@@ -133,31 +137,26 @@ class _RehabPageState extends State<RehabPage> {
             child: FirebaseAnimatedList(
                 query: ref,
                 itemBuilder: ((context, snapshot, animation, index) {
-                  // var object = (snapshot.children)[index];
                   var object = snapshot.children;
-                  var length = object.length;
-                  var key = snapshot.key;
-
-                  debugPrint("$length");
-                  debugPrint(object.toString());
-                  debugPrint(key.toString());
-
-                  for (final jsonObject in snapshot.children) {
-                    var subJson = snapshot.children.first;
-                    debugPrint(subJson.key);
-                    debugPrint(subJson.value.toString());
-                    return Column(
-                      children: [
-                        ListTile(
-                          leading: Image.asset('assets/pic1.png'),
-                          title: Text(snapshot.key.toString()),
-                          subtitle: Text(subJson.key.toString()),
-                        ),
-                        SizedBoxWidget.box(15.0)
-                      ],
-                    );
+                  int length = object.length;
+                  debugPrint("Key --> ${snapshot.key}");
+                  debugPrint("length of Object --> ${length.toString()}");
+                  debugPrint("");
+                  for (final subObject in snapshot.children) {
+                    counter += 1;
+                    print("couonter =-> $counter");
+                    debugPrint(subObject.key);
+                    debugPrint("Key --> ${snapshot.key}");
+                    childrenWidget.add(ListTile(
+                      leading: Image.asset('assets/pic1.png'),
+                      title: Text("$counter. ${subObject.key.toString()}"),
+                    ));
                   }
-                  return Container();
+                  debugPrint("");
+
+                  return Column(
+                    children: childrenWidget,
+                  );
                 })),
           )
         ],

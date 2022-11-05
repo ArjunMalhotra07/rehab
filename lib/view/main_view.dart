@@ -34,25 +34,26 @@ class _MainViewState extends State<MainView> {
         title: const Text(""),
       ),
       body: screens[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() {
-          currentIndex = index;
-        }),
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.green,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.green.shade900,
-        iconSize: 30,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.data_thresholding_sharp), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.web), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.web), label: "Home"),
-        ],
+      bottomNavigationBar: SizedBox(
+        height: 80,
+        child: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: (index) => setState(() {
+            currentIndex = index;
+          }),
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.black45,
+          iconSize: 28,
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.data_thresholding_sharp), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Rehab"),
+            BottomNavigationBarItem(icon: Icon(Icons.web), label: "Practice"),
+            BottomNavigationBarItem(icon: Icon(Icons.web), label: "Profile"),
+          ],
+        ),
       ),
     );
   }
