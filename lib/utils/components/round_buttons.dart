@@ -5,29 +5,40 @@ class RoundButton extends StatelessWidget {
   final String title;
   final bool loading;
   final VoidCallback onPress;
+  final Color? buttonColor;
+  final double? height;
+  final double? width;
+  final double? radius;
+  final double? titleSize;
   const RoundButton(
       {super.key,
       required this.title,
       this.loading = false,
-      required this.onPress});
+      this.buttonColor,
+      required this.onPress,
+      this.height,
+      this.width,
+      this.radius,
+      this.titleSize});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPress,
       child: Container(
-        height: 50,
-        width: 200,
-        decoration: const BoxDecoration(color: Constants.greenColor),
+        height: height ?? 60.0,
+        width: width ?? 350,
+        decoration: BoxDecoration(
+          color: buttonColor ?? Constants.greenColor,
+          borderRadius: BorderRadius.circular(radius ?? 45),
+        ),
         child: Center(
             child: loading
                 ? const CircularProgressIndicator(
                     color: Constants.whiteColor,
                   )
-                : Text(
-                    title,
-                    style: const TextStyle(color: Constants.whiteColor),
-                  )),
+                : TextStyleWidget.textStyle(title, titleSize ?? 18,
+                    c: Constants.whiteColor)),
       ),
     );
   }

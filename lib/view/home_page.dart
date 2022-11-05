@@ -66,22 +66,22 @@
 //         Center(
 //           child: RoundButton(
 //               title: "Add data",
-//               onPress: () {
-//                 if (kDebugMode) {
-//                   print("Clicked");
-//                 }
-//                 databaseRef1.child("${day}-${now.month}-${now.year}").update({
-//                   '${now.hour}:${now.minute}': "Example${now.microsecond}"
-//                 }).then((value) {
-//                   Utils.flushBarErrorMessage("Added Session", context,
-//                       color: Constants.blueColor);
-//                 }).catchError((error, stackTrace) {
-//                   if (kDebugMode) {
-//                     print(error.toString());
-//                   }
-//                   Utils.flushBarErrorMessage(error.message.toString(), context);
-//                 });
-//               }),
+// onPress: () {
+// if (kDebugMode) {
+//   print("Clicked");
+// }
+// databaseRef1.child("${day}-${now.month}-${now.year}").update({
+//   '${now.hour}:${now.minute}': "Example${now.microsecond}"
+// }).then((value) {
+//   Utils.flushBarErrorMessage("Added Session", context,
+//       color: Constants.blueColor);
+// }).catchError((error, stackTrace) {
+//   if (kDebugMode) {
+//     print(error.toString());
+//   }
+//   Utils.flushBarErrorMessage(error.message.toString(), context);
+// });
+// }),
 //         ),
 //       ],
 //     );
@@ -151,49 +151,83 @@ class _HomePageState extends State<HomePage> {
         toolbarHeight: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(45.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          TextStyleWidget.textStyle("Good Morning Jane", 35,
-              c: Constants.blackShade),
-          SizedBoxWidget.box(15.0),
-          Container(
-              decoration: BoxDecoration(
-                  color: Constants.whiteColor,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Constants.greyColor, width: 3)),
-              height: 150,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 7.0, horizontal: 15),
-                child: Column(
-                  children: [
-                    Row(
+        padding:
+            const EdgeInsets.only(top: 25.0, left: 35, right: 35, bottom: 10),
+        child: Stack(
+          children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              TextStyleWidget.textStyle("Good Morning \nJane", 35,
+                  c: Constants.blackShade),
+              SizedBoxWidget.box(15.0),
+              Container(
+                  decoration: BoxDecoration(
+                      color: Constants.whiteColor,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Constants.greyColor, width: 3)),
+                  height: 150,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 7.0, horizontal: 15),
+                    child: Column(
                       children: [
-                        TextStyleWidget.textStyle("Today's Progress", 23,
-                            c: Constants.blackShade1),
+                        Row(
+                          children: [
+                            TextStyleWidget.textStyle("Today's Progress", 23,
+                                c: Constants.blackShade1),
+                            const Spacer(),
+                            TextStyleWidget.textStyle("50%", 22,
+                                c: Constants.blueColor),
+                          ],
+                        ),
                         const Spacer(),
-                        TextStyleWidget.textStyle("50%", 22,
-                            c: Constants.blueColor),
+                        Row(
+                          children: [
+                            Image.asset('assets/tick.png',
+                                height: 50, fit: BoxFit.fill),
+                            TextStyleWidget.textStyle(
+                                "Completed \n2 sessions", 15,
+                                c: Constants.blackShade1),
+                            const Spacer(),
+                            Image.asset('assets/arrow.png',
+                                height: 50, fit: BoxFit.fill),
+                            TextStyleWidget.textStyle(
+                                " Pending \n2 sessions", 15,
+                                c: Constants.blackShade1),
+                          ],
+                        ),
                       ],
                     ),
-                    const Spacer(),
-                    Row(
-                      children: [
-                        Image.asset('assets/tick.png',
-                            height: 50, fit: BoxFit.fill),
-                        TextStyleWidget.textStyle("Completed \n2 sessions", 15,
-                            c: Constants.blackShade1),
-                        const Spacer(),
-                        Image.asset('assets/arrow.png',
-                            height: 50, fit: BoxFit.fill),
-                        TextStyleWidget.textStyle(" Pending \n2 sessions", 15,
-                            c: Constants.blackShade1),
-                      ],
-                    )
-                  ],
-                ),
+                  )),
+              Spacer(),
+            ]),
+            Positioned(
+              top: MediaQuery.of(context).size.height * .69,
+              child: Center(
+                  child: RoundButton(
+                title: "Start Session",
+                width: 320,
+                onPress: () {
+                  if (kDebugMode) {
+                    print("Clicked");
+                  }
+                  databaseRef1.child("$day-${now.month}-${now.year}").update({
+                    '${now.hour}:${now.minute}': "Example${now.microsecond}"
+                  }).then((value) {
+                    Utils.flushBarErrorMessage("Added Session", context,
+                        color: Constants.blueColor);
+                  }).catchError((error, stackTrace) {
+                    if (kDebugMode) {
+                      print(error.toString());
+                    }
+                    Utils.flushBarErrorMessage(
+                        error.message.toString(), context);
+                  });
+                },
+                buttonColor: Constants.blueColor,
               )),
-        ]),
+            )
+          ],
+        ),
       ),
     );
   }
