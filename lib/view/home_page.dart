@@ -234,29 +234,21 @@ class _HomePageState extends State<HomePage> {
                     query: ref,
                     itemBuilder: ((context, snapshot, animation, index) {
                       var object = snapshot.children; //Every time stamp
+                      int length = object.length;
+                      debugPrint("Key --> ${snapshot.key}");
+                      debugPrint("length of Object --> ${length.toString()}");
+                      final childrenWidget = <Widget>[];
                       for (final timeStamp in object) {
                         debugPrint(timeStamp.key);
                         childrenWidget.add(list(
                             timeStamp.key.toString(), snapshot.key.toString()));
-                        childrenWidget1.add(CardWidget(
-                          title: "Session ${index + 1}",
-                          height: 170.0,
-                          width: 100.0,
-                          time: "Peformed at \n${timeStamp.key.toString()}",
-                          imageUrl: 'assets/woman1.jpg',
-                        ));
                       }
-                      return Container();
+                      debugPrint("Terminate");
+                      debugPrint("");
+                      return Column(
+                        children: childrenWidget,
+                      );
                     })),
-                Column(
-                  children: childrenWidget,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 100.0),
-                  child: Column(
-                    children: childrenWidget1,
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 25.0),
                   child: ListView.builder(
@@ -294,8 +286,10 @@ class _HomePageState extends State<HomePage> {
                   if (kDebugMode) {
                     print("Clicked");
                   }
-                  databaseRef1.child("$day-${now.month}-${now.year}").update(
-                      {now2: "Example${now.microsecond}"}).then((value) {
+                  databaseRef1
+                      .child("${day + 2}-${now.month}-${now.year}")
+                      .update({now2: "Example${now.microsecond}"}).then(
+                          (value) {
                     Utils.flushBarErrorMessage("Added Session", context,
                         color: Constants.blueColor);
                   }).catchError((error, stackTrace) {

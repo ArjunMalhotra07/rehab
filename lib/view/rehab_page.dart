@@ -20,10 +20,19 @@ class _RehabPageState extends State<RehabPage> {
   final ref = FirebaseDatabase.instance.ref('');
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var uid = user?.uid;
-    final childrenWidget = <Widget>[];
     final childrenWidgetList = <Widget>[];
+
+    // final childrenWidget = <Widget>[];
+    var uid = user?.uid;
     final testList = <String>[];
     int counter = 0;
     final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions');
@@ -111,6 +120,7 @@ class _RehabPageState extends State<RehabPage> {
                   int length = object.length;
                   debugPrint("Key --> ${snapshot.key}");
                   debugPrint("length of Object --> ${length.toString()}");
+                  final childrenWidget = <Widget>[];
                   for (final timeStamp in object) {
                     counter += 1;
                     debugPrint(timeStamp.key);
@@ -119,11 +129,10 @@ class _RehabPageState extends State<RehabPage> {
                   }
                   debugPrint("Terminate");
                   debugPrint("");
-                  return Container();
+                  return Column(
+                    children: childrenWidget,
+                  );
                 })),
-            Column(
-              children: childrenWidget,
-            )
           ],
         ),
       ),
