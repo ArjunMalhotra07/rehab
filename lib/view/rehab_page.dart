@@ -23,6 +23,8 @@ class _RehabPageState extends State<RehabPage> {
   Widget build(BuildContext context) {
     var uid = user?.uid;
     final childrenWidget = <Widget>[];
+    final childrenWidgetList = <Widget>[];
+    final testList = <String>[];
     int counter = 0;
     final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions');
     // ref.onValue.listen((event) {
@@ -62,105 +64,117 @@ class _RehabPageState extends State<RehabPage> {
     // }, onError: (error) {});
     return Padding(
       padding: const EdgeInsets.only(left: 30.0, right: 30),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Rehab Programme",
-            style: TextStyle(color: Constants.blackColor, fontSize: 30),
-          ),
-          SizedBoxWidget.box(10.0),
-          ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.asset('assets/doctor.png')),
-          SizedBoxWidget.box(10.0),
-          Row(
-            children: [
-              const Text(
-                "History",
-                style: TextStyle(color: Constants.blackColor, fontSize: 22),
-              ),
-              const Spacer(),
-              Image.asset('assets/funnel.png', height: 30, fit: BoxFit.fill),
-            ],
-          ),
-          SizedBoxWidget.box(5.0),
-          Container(
-              height: 85,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.0),
-                color: Colors.grey.shade400,
-              ),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const SizedBox(width: 5),
-                      Column(
-                        children: const [
-                          Text(
-                            "Total Sessions",
-                            style: TextStyle(
-                                color: Constants.blackColor, fontSize: 15),
-                          ),
-                          Text("16")
-                        ],
-                      ),
-                      const SizedBox(width: 5),
-                      Container(
-                        width: 1,
-                        height: 25,
-                        color: Constants.blackColor,
-                      ),
-                      const SizedBox(width: 5),
-                      Column(
-                        children: const [
-                          Text(
-                            "Total time",
-                            style: TextStyle(
-                                color: Constants.blackColor, fontSize: 15),
-                          ),
-                          Text("16")
-                        ],
-                      ),
-                      const SizedBox(width: 5),
-                    ],
-                  ),
+      child: Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Rehab Programme",
+              style: TextStyle(color: Constants.blackColor, fontSize: 30),
+            ),
+            SizedBoxWidget.box(10.0),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset('assets/doctor.png')),
+            SizedBoxWidget.box(10.0),
+            Row(
+              children: [
+                const Text(
+                  "History",
+                  style: TextStyle(color: Constants.blackColor, fontSize: 22),
                 ),
-              )),
-          SizedBoxWidget.box(30.0),
-          Expanded(
-            child: FirebaseAnimatedList(
-                query: ref,
-                itemBuilder: ((context, snapshot, animation, index) {
-                  var object = snapshot.children;
-                  int length = object.length;
-                  debugPrint("Key --> ${snapshot.key}");
-                  debugPrint("length of Object --> ${length.toString()}");
-                  debugPrint("");
-                  for (final subObject in snapshot.children) {
-                    counter += 1;
-                    print("couonter =-> $counter");
-                    debugPrint(subObject.key);
+                const Spacer(),
+                Image.asset('assets/funnel.png', height: 30, fit: BoxFit.fill),
+              ],
+            ),
+            SizedBoxWidget.box(5.0),
+            Container(
+                height: 85,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0),
+                  color: Colors.grey.shade400,
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const SizedBox(width: 5),
+                        Column(
+                          children: const [
+                            Text(
+                              "Total Sessions",
+                              style: TextStyle(
+                                  color: Constants.blackColor, fontSize: 15),
+                            ),
+                            Text("16")
+                          ],
+                        ),
+                        const SizedBox(width: 5),
+                        Container(
+                          width: 1,
+                          height: 25,
+                          color: Constants.blackColor,
+                        ),
+                        const SizedBox(width: 5),
+                        Column(
+                          children: const [
+                            Text(
+                              "Total time",
+                              style: TextStyle(
+                                  color: Constants.blackColor, fontSize: 15),
+                            ),
+                            Text("16")
+                          ],
+                        ),
+                        const SizedBox(width: 5),
+                      ],
+                    ),
+                  ),
+                )),
+            SizedBoxWidget.box(30.0),
+            Expanded(
+              child: FirebaseAnimatedList(
+                  query: ref,
+                  // reverse: true,
+                  itemBuilder: ((context, snapshot, animation, index) {
+                    var object = snapshot.children; //Every time stamp
+                    int length = object.length;
                     debugPrint("Key --> ${snapshot.key}");
-                    childrenWidget.add(ListTile(
-                      leading: Image.asset('assets/pic1.png'),
-                      title: Text("$counter. ${subObject.key.toString()}"),
-                    ));
-                  }
-                  debugPrint("");
+                    debugPrint("length of Object --> ${length.toString()}");
+                    for (final timeStamp in object) {
+                      counter += 1;
+                      debugPrint(timeStamp.key);
+                      testList.add(timeStamp.key.toString());
+                      childrenWidget.add(list(timeStamp.key.toString()));
+                    }
 
-                  return Column(
-                    children: childrenWidget,
-                  );
-                })),
-          )
-        ],
+                    // debugPrint(testList.toString());
+                    debugPrint(counter.toString());
+                    debugPrint("Terminate");
+                    debugPrint("");
+                    return Container();
+                  })),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: childrenWidget,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
+    );
+  }
+
+  list(String s) {
+    return ListTile(
+      title: Text(s),
     );
   }
 }
