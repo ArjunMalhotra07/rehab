@@ -250,6 +250,7 @@ class _HomePageState extends State<HomePage> {
                             assetUrl = 'assets/woman3.jpeg';
                           }
                           childrenWidget.add(CardWidget(
+                            status: "Complete",
                             title: "Session $_counter",
                             height: 170.0,
                             width: 450.0,
@@ -270,7 +271,7 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
-                      itemCount: 3,
+                      itemCount: 10,
                       itemBuilder: ((context, index) {
                         var assetUrl = '';
                         if (index % 3 == 0) {
@@ -284,7 +285,7 @@ class _HomePageState extends State<HomePage> {
                           title: "Session ${index + 1}",
                           height: 170.0,
                           width: 100.0,
-                          time: "**********",
+                          time: "",
                           imageUrl: assetUrl,
                         );
                       })),
@@ -293,7 +294,7 @@ class _HomePageState extends State<HomePage> {
               ]),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * .69,
+              top: MediaQuery.of(context).size.height * .68,
               child: Center(
                   child: RoundButton(
                 title: "Start Session",

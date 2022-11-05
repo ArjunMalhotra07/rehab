@@ -7,13 +7,15 @@ class CardWidget extends StatefulWidget {
   final String? imageUrl;
   final String? time;
   final double height, width;
+  final String? status;
   const CardWidget(
       {super.key,
       this.time,
       this.imageUrl,
       this.title,
       required this.height,
-      required this.width});
+      required this.width,
+      this.status});
 
   @override
   State<CardWidget> createState() => _CardWidgetState();
@@ -44,10 +46,12 @@ class _CardWidgetState extends State<CardWidget> {
                   TextStyleWidget.textStyle(widget.title.toString(), 21,
                       c: Constants.blackShade),
                   RoundButton(
-                    title: "Completed",
+                    title: widget.status ?? "Start",
                     onPress: () {},
                     height: 30,
-                    buttonColor: Constants.blueColor,
+                    buttonColor: widget.status == null
+                        ? Colors.grey.shade300
+                        : Constants.blueColor,
                     width: 100,
                     titleSize: 15,
                   ),
