@@ -173,8 +173,12 @@ class _RehabPageState extends State<RehabPage> {
   }
 
   list(String s) {
-    return ListTile(
-      title: Text(s),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0, top: 12),
+      child: ListTile(
+        leading: Image.asset('assets/pic1.png'),
+        title: Text(s),
+      ),
     );
   }
 }
