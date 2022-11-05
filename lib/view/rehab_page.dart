@@ -22,11 +22,14 @@ class _RehabPageState extends State<RehabPage> {
     var uid = user?.uid;
     final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions');
     ref.onValue.listen((event) {
-      // for (final child in event.snapshot.children) {
-      //   // Handle the post.
-      //   var dataObject = child.value.toString();
-      //   print(dataObject);
-      // }
+      debugPrint("Inside Listener");
+      for (final child in event.snapshot.children) {
+        // Handle the post.
+        var dataObject = child.value;
+        var key = child.key.toString();
+        debugPrint(dataObject.toString());
+        debugPrint(key);
+      }
       Map dataObject = {
         "5-11-2022": {
           "2:9": "Example728",
@@ -51,6 +54,7 @@ class _RehabPageState extends State<RehabPage> {
           debugPrint("hour: $hour value: $value");
         }
       }
+      debugPrint("");
     }, onError: (error) {});
     return Padding(
       padding: const EdgeInsets.only(left: 30.0, right: 30),
@@ -91,6 +95,7 @@ class _RehabPageState extends State<RehabPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      SizedBox(width: 5),
                       Column(
                         children: const [
                           Text(
@@ -117,20 +122,42 @@ class _RehabPageState extends State<RehabPage> {
                           ),
                           Text("16")
                         ],
-                      )
+                      ),
+                      SizedBox(width: 5),
                     ],
                   ),
                 ),
               )),
+          SizedBoxWidget.box(30.0),
           Expanded(
             child: FirebaseAnimatedList(
                 query: ref,
                 itemBuilder: ((context, snapshot, animation, index) {
                   // var object = (snapshot.children)[index];
+                  var object = snapshot.children;
+                  var length = object.length;
+                  var key = snapshot.key;
 
-                  return const ListTile(
-                      // title: Text(snapshot.children.toString()),
-                      );
+                  debugPrint("$length");
+                  debugPrint(object.toString());
+                  debugPrint(key.toString());
+
+                  for (final jsonObject in snapshot.children) {
+                    var subJson = snapshot.children.first;
+                    debugPrint(subJson.key);
+                    debugPrint(subJson.value.toString());
+                    return Column(
+                      children: [
+                        ListTile(
+                          leading: Image.asset('assets/pic1.png'),
+                          title: Text(snapshot.key.toString()),
+                          subtitle: Text(subJson.key.toString()),
+                        ),
+                        SizedBoxWidget.box(15.0)
+                      ],
+                    );
+                  }
+                  return Container();
                 })),
           )
         ],

@@ -70,9 +70,7 @@ class _HomePageState extends State<HomePage> {
                 if (kDebugMode) {
                   print("Clicked");
                 }
-                databaseRef1
-                    .child("${day + 1}-${now.month}-${now.year}")
-                    .update({
+                databaseRef1.child("${day}-${now.month}-${now.year}").update({
                   '${now.hour}:${now.minute}': "Example${now.microsecond}"
                 }).then((value) {
                   Utils.flushBarErrorMessage("Added Session", context,
