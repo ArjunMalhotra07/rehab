@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                                   // This builder will only get called when the _counter
                                   // is updated.
                                   return TextStyleWidget.textStyle(
-                                      "Completed \n$value sessions", 15,
+                                      "Completed \n sessions", 15,
                                       c: Constants.blackShade1);
                                 },
                               ),
@@ -239,24 +239,28 @@ class _HomePageState extends State<HomePage> {
                         debugPrint("length of Object --> ${length.toString()}");
                         final childrenWidget = <Widget>[];
                         for (final timeStamp in object) {
-                          debugPrint(timeStamp.key);
-                          _counter++;
-                          var assetUrl = '';
-                          if (_counter % 3 == 0) {
-                            assetUrl = 'assets/woman1.jpg';
-                          } else if (_counter % 3 == 1) {
-                            assetUrl = 'assets/woman2.jpg';
-                          } else {
-                            assetUrl = 'assets/woman3.jpeg';
+                          if (snapshot.key ==
+                              "${now.day}-${now.month}-${now.year}") {
+                            debugPrint(timeStamp.key);
+                            _counter += 1;
+                            var assetUrl = '';
+                            if (_counter % 3 == 0) {
+                              assetUrl = 'assets/woman1.jpg';
+                            } else if (_counter % 3 == 1) {
+                              assetUrl = 'assets/woman2.jpg';
+                            } else {
+                              assetUrl = 'assets/woman3.jpeg';
+                            }
+                            childrenWidget.add(CardWidget(
+                              status: "Complete ",
+                              title: "Session ",
+                              height: 170.0,
+                              width: 450.0,
+                              time:
+                                  "Performed at \n${timeStamp.key.toString()}",
+                              imageUrl: assetUrl,
+                            ));
                           }
-                          childrenWidget.add(CardWidget(
-                            status: "Complete",
-                            title: "Session $_counter",
-                            height: 170.0,
-                            width: 450.0,
-                            time: "Performed at \n${timeStamp.key.toString()}",
-                            imageUrl: assetUrl,
-                          ));
                         }
                         debugPrint("Terminate");
                         debugPrint(_counter.toString());
@@ -303,10 +307,8 @@ class _HomePageState extends State<HomePage> {
                   if (kDebugMode) {
                     print("Clicked");
                   }
-                  databaseRef1
-                      .child("${day + 2}-${now.month}-${now.year}")
-                      .update({now2: "Example${now.microsecond}"}).then(
-                          (value) {
+                  databaseRef1.child("$day-${now.month}-${now.year}").update(
+                      {now2: "Example${now.microsecond}"}).then((value) {
                     Utils.flushBarErrorMessage("Added Session", context,
                         color: Constants.blueColor);
                   }).catchError((error, stackTrace) {

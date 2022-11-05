@@ -1,6 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
+import 'package:rehab/utils/utils.dart';
 
 class CardWidget extends StatefulWidget {
   final String? title;
@@ -22,8 +27,13 @@ class CardWidget extends StatefulWidget {
 }
 
 class _CardWidgetState extends State<CardWidget> {
+  final now = DateTime.now();
+  final now2 = DateFormat('hh:mm a').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    var uid = user?.uid;
+    final databaseRef1 = FirebaseDatabase.instance.ref('uids/$uid/sessions');
     return Padding(
       padding: const EdgeInsets.only(bottom: 30.0),
       child: Container(
@@ -47,7 +57,27 @@ class _CardWidgetState extends State<CardWidget> {
                       c: Constants.blackShade),
                   RoundButton(
                     title: widget.status ?? "Start",
-                    onPress: () {},
+                    onPress: widget.status == null
+                        ? () {
+                            databaseRef1
+                                .child("${now.day}-${now.month}-${now.year}")
+                                .update({now2: "${widget.title}"}).then(
+                                    (value) {
+                              Utils.flushBarErrorMessage(
+                                  "Added Session", context,
+                                  color: Constants.blueColor);
+                            }).catchError((error, stackTrace) {
+                              if (kDebugMode) {
+                                print(error.toString());
+                              }
+                              Utils.flushBarErrorMessage(
+                                  error.message.toString(), context);
+                            });
+                          }
+                        : () {
+                            Utils.flushBarErrorMessage(
+                                "This session is completed", context);
+                          },
                     height: 30,
                     buttonColor: widget.status == null
                         ? Colors.grey.shade300
