@@ -207,13 +207,15 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
-                      itemCount: 10,
+                      itemCount: 3,
                       itemBuilder: ((context, index) {
                         var assetUrl = '';
-                        if (index % 2 == 0) {
+                        if (index % 3 == 0) {
                           assetUrl = 'assets/woman1.jpg';
-                        } else {
+                        } else if (index % 3 == 1) {
                           assetUrl = 'assets/woman2.jpg';
+                        } else {
+                          assetUrl = 'assets/woman3.jpeg';
                         }
                         return CardWidget(
                           title: "Session ${index + 1}",
@@ -224,6 +226,10 @@ class _HomePageState extends State<HomePage> {
                         );
                       })),
                 ),
+                // Stepper(
+                //     margin: const EdgeInsets.only(right: 150.0),
+                //     type: StepperType.vertical,
+                //     steps: getSteps()),
                 SizedBoxWidget.box(45.0)
               ]),
             ),
@@ -257,5 +263,21 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  List<Step> getSteps() {
+    return [
+      const Step(
+          title: Text("A"),
+          content: CardWidget(
+            title: "Session 1",
+            height: 170.0,
+            width: 200.0,
+            time: "Peformed at \n8:12 AM",
+            // imageUrl: "assetUrl",
+          )),
+      Step(title: Text("B"), content: Container()),
+      Step(title: Text("C"), content: Container())
+    ];
   }
 }

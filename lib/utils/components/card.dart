@@ -44,7 +44,7 @@ class _CardWidgetState extends State<CardWidget> {
                   TextStyleWidget.textStyle(widget.title.toString(), 21,
                       c: Constants.blackShade),
                   RoundButton(
-                    title: "Performed",
+                    title: "Completed",
                     onPress: () {},
                     height: 30,
                     buttonColor: Constants.blueColor,
