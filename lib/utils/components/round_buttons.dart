@@ -38,3 +38,15 @@ class SizedBoxWidget {
     return SizedBox(height: h);
   }
 }
+
+class TextStyleWidget {
+  static textStyle(String s, double size, {Color? c}) {
+    return Text(
+      s,
+      style: TextStyle(
+          fontSize: size,
+          color: c ?? Constants.blackColor,
+          fontWeight: FontWeight.w600),
+    );
+  }
+}
