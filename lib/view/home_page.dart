@@ -163,18 +163,33 @@ class _HomePageState extends State<HomePage> {
                   border: Border.all(color: Constants.greyColor, width: 3)),
               height: 150,
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 7.0, horizontal: 15),
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        TextStyleWidget.textStyle("Today's Progress", 22,
+                        TextStyleWidget.textStyle("Today's Progress", 23,
                             c: Constants.blackShade1),
                         const Spacer(),
                         TextStyleWidget.textStyle("50%", 22,
                             c: Constants.blueColor),
                       ],
                     ),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        Image.asset('assets/tick.png',
+                            height: 50, fit: BoxFit.fill),
+                        TextStyleWidget.textStyle("Completed \n2 sessions", 15,
+                            c: Constants.blackShade1),
+                        const Spacer(),
+                        Image.asset('assets/arrow.png',
+                            height: 50, fit: BoxFit.fill),
+                        TextStyleWidget.textStyle(" Pending \n2 sessions", 15,
+                            c: Constants.blackShade1),
+                      ],
+                    )
                   ],
                 ),
               )),
