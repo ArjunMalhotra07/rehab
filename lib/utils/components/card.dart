@@ -13,6 +13,7 @@ class CardWidget extends StatefulWidget {
   final String? time;
   final double height, width;
   final String? status;
+  final int? counterVar;
   const CardWidget(
       {super.key,
       this.time,
@@ -20,6 +21,7 @@ class CardWidget extends StatefulWidget {
       this.title,
       required this.height,
       required this.width,
+      this.counterVar,
       this.status});
 
   @override
@@ -57,27 +59,36 @@ class _CardWidgetState extends State<CardWidget> {
                       c: Constants.blackShade),
                   RoundButton(
                     title: widget.status ?? "Start",
-                    onPress: widget.status == null
-                        ? () {
-                            databaseRef1
-                                .child("${now.day}-${now.month}-${now.year}")
-                                .update({now2: "${widget.title}"}).then(
-                                    (value) {
-                              Utils.flushBarErrorMessage(
-                                  "Added Session", context,
-                                  color: Constants.blueColor);
-                            }).catchError((error, stackTrace) {
-                              if (kDebugMode) {
-                                print(error.toString());
+                    onPress: () {
+                      if (widget.counterVar != 10) {
+                        widget.status == null
+                            ? () {
+                                databaseRef1
+                                    .child(
+                                        "${now.day}-${now.month}-${now.year}")
+                                    .update({now2: "${widget.title}"}).then(
+                                        (value) {
+                                  Utils.flushBarErrorMessage(
+                                      "Added Session", context,
+                                      color: Constants.blueColor);
+                                }).catchError((error, stackTrace) {
+                                  if (kDebugMode) {
+                                    print(error.toString());
+                                  }
+                                  Utils.flushBarErrorMessage(
+                                      error.message.toString(), context);
+                                });
                               }
-                              Utils.flushBarErrorMessage(
-                                  error.message.toString(), context);
-                            });
-                          }
-                        : () {
-                            Utils.flushBarErrorMessage(
-                                "This session is completed", context);
-                          },
+                            : () {
+                                Utils.flushBarErrorMessage(
+                                    "This session is completed", context);
+                              };
+                      } else {
+                        Utils.flushBarErrorMessage(
+                            "No sessions for today", context,
+                            color: Constants.redColor);
+                      }
+                    },
                     height: 30,
                     buttonColor: widget.status == null
                         ? Colors.grey.shade300

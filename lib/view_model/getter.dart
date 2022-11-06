@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class ListenFirebase extends ChangeNotifier {
   final user = FirebaseAuth.instance.currentUser;
 
-  int _counter = 16;
+  int _counter = 0;
   int get counter => _counter;
   setCounter(int value) {
     _counter = value;
