@@ -1,0 +1,47 @@
+Future signUp(String email, pass, BuildContext context) async {
+    try {
+      await firebaseObject
+          .createUserWithEmailAndPassword(email: email, password: pass)
+          .then((value) {
+        Timer(const Duration(seconds: 1), () {
+          Navigator.pushReplacementNamed(context, RoutesName.main);
+        });
+        Utils.flushBarErrorMessage("Sign Up Successful", context,
+            color: Constants.blueColor);
+      }).catchError((error, stackTrace){});
+    } on FirebaseAuthException catch (e) {}
+}
+
+Future signIn(String email, pass, BuildContext context) async {
+    try {
+      await firebaseObject
+          .signInWithEmailAndPassword(email: email, password: pass)
+          .then((value) {
+        Timer(const Duration(seconds: 1), () {
+          Navigator.pushReplacementNamed(context, RoutesName.main);
+        });
+        Utils.flushBarErrorMessage("Login Successful", context,
+            color: Constants.blueColor);
+      }).catchError((error, stackTrace) {});
+    } on FirebaseAuthException catch (e) {}
+}
+
+I want to sign a user out and sign a new user in. I am not able to do that. The information of previous user is somehow being saved, I can't deduce how. Any idea what should I do? I followed the answer in this post : https://stackoverflow.com/questions/45079459/how-to-signout-a-user-in-flutter-with-firebase-authentication
+added await keyword but its still not quite working
+This is the code to its
+
+```
+
+Future<void> signOut(BuildContext context) async {
+    try {
+      await firebaseObject.signOut().then((value) {
+        Timer(const Duration(seconds: 1), () {
+          Navigator.pushReplacementNamed(context, RoutesName.login);
+        });
+        Utils.flushBarErrorMessage("Logged out successfully", context,
+            color: Constants.blueColor);
+      });
+    } on FirebaseAuthException catch (e) {}
+}
+
+```

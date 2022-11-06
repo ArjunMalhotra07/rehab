@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
+import 'package:rehab/view/login_screen.dart';
 
 import '../utils/routes/routes_name.dart';
 
@@ -25,9 +26,8 @@ class FirebaseCalls {
         if (kDebugMode) {
           print("Id ${value.user?.email}");
         }
-
         Timer(const Duration(seconds: 1), () {
-          Navigator.popAndPushNamed(context, RoutesName.main);
+          Navigator.pushReplacementNamed(context, RoutesName.main);
         });
         Utils.flushBarErrorMessage("Sign Up Successful", context,
             color: Constants.blueColor);
@@ -58,7 +58,7 @@ class FirebaseCalls {
           print("Id $value");
         }
         Timer(const Duration(seconds: 1), () {
-          Navigator.popAndPushNamed(context, RoutesName.main);
+          Navigator.pushNamed(context, RoutesName.main);
         });
         Utils.flushBarErrorMessage("Login Successful", context,
             color: Constants.blueColor);
@@ -81,11 +81,13 @@ class FirebaseCalls {
     }
   }
 
-  Future signOut(BuildContext context) async {
+  Future<void> signOut(BuildContext context) async {
     try {
-      firebaseObject.signOut().then((value) {
+      await firebaseObject.signOut().then((value) {
         Timer(const Duration(seconds: 1), () {
-          Navigator.popAndPushNamed(context, RoutesName.login);
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+              (route) => false);
         });
         Utils.flushBarErrorMessage("Logged out successfully ", context,
             color: Constants.blueColor);
