@@ -4,42 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class ListenFirebase extends ChangeNotifier {
-  final user = FirebaseAuth.instance.currentUser;
-  final String? userId;
-  ListenFirebase(this.userId);
-
-  int _counter = 0;
-  int get counter => _counter;
-  setCounter(int value) {
-    _counter = value;
-    notifyListeners();
-  }
-
-  final now = DateTime.now();
-  final now2 = DateFormat('hh:mm a').format(DateTime.now());
-
-  funcGetTodayEntries(String s) async {
-    var count = 0;
-    debugPrint("***************");
-    final ref = FirebaseDatabase.instance.ref('uids/$userId/sessions/$s');
-    DatabaseEvent event = await ref.once();
-    var object = event.snapshot;
-    for (final children in object.children) {
-      count += 1;
-      setCounter(count);
-      setListofKeys(children.key);
-    }
-  }
-
-  final List<String?> _keysList = [];
-  List<String?> get listOfKeys => _keysList;
-  setListofKeys(String? value) {
-    _keysList.add(value);
-    notifyListeners();
-  }
-}
-
 class ListenFirebase1 extends GetxController {
   final user = FirebaseAuth.instance.currentUser;
   final String? userId;

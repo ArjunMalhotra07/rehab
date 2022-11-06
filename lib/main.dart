@@ -19,19 +19,14 @@ class MyApp extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     var uid = user?.uid;
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ListenFirebase(uid)),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
-        initialRoute: RoutesName.check,
-        onGenerateRoute: Routes.generateRoute,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
       ),
+      initialRoute: RoutesName.check,
+      onGenerateRoute: Routes.generateRoute,
     );
   }
 }

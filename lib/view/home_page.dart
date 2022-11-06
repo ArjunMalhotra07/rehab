@@ -139,6 +139,14 @@ class _HomePageState extends State<HomePage> {
                       query: ref,
                       itemBuilder: ((context, snapshot, animation, index) {
                         final childrenWidget = <Widget>[];
+                        var assetUrl = '';
+                        if (((index + 1)) % 3 == 0) {
+                          assetUrl = 'assets/woman1.jpg';
+                        } else if (index % 3 == 1) {
+                          assetUrl = 'assets/woman2.jpg';
+                        } else {
+                          assetUrl = 'assets/woman3.jpeg';
+                        }
                         childrenWidget.add(CardWidget(
                           context: context,
                           status: "Complete",
@@ -146,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                           height: 170.0,
                           width: 450.0,
                           time: "Performed at \n${snapshot.key.toString()}",
-                          counterVar: controller.counter,
+                          imageUrl: assetUrl,
                         ));
                         return Column(
                           children: childrenWidget,
@@ -186,7 +194,9 @@ class _HomePageState extends State<HomePage> {
               top: MediaQuery.of(context).size.height * .68,
               child: Center(
                   child: Obx((() => RoundButton(
-                        title: "Start Session ${controller.counter + 1}",
+                        title: controller.counter == 10
+                            ? "Sessions Completed"
+                            : "Start Session ${controller.counter + 1}",
                         width: 320,
                         onPress: () {
                           if (controller.counter != 10) {
