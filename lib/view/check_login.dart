@@ -20,9 +20,7 @@ class _CheckLoginState extends State<CheckLogin> {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return const MainView(
-            name: "123456789",
-          );
+          return const MainView();
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {

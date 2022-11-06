@@ -11,8 +11,7 @@ import 'package:rehab/view/rehab_page.dart';
 import '../utils/utils.dart';
 
 class MainView extends StatefulWidget {
-  const MainView({Key? key, required this.name}) : super(key: key);
-  final String? name;
+  const MainView({Key? key}) : super(key: key);
   @override
   State<MainView> createState() => _MainViewState();
 }
@@ -21,28 +20,6 @@ class _MainViewState extends State<MainView> {
   @override
   void initState() {
     super.initState();
-    if (kDebugMode) {
-      print("name --- ");
-      print(widget.name.toString());
-    }
-    if (widget.name != "123456789") {
-      addData();
-    }
-  }
-
-  final user = FirebaseAuth.instance.currentUser;
-  addData() {
-    var uid = user?.uid;
-    final databaseRef = FirebaseDatabase.instance.ref('uids');
-    print(uid);
-    databaseRef.child("$uid").update({"name": widget.name}).then((value) {
-      print("Added name");
-    }).catchError((error, stackTrace) {
-      if (kDebugMode) {
-        print(error.toString());
-      }
-      Utils.flushBarErrorMessage(error.message.toString(), context);
-    });
   }
 
   int currentIndex = 0;

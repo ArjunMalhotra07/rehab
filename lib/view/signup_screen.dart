@@ -21,8 +21,6 @@ class SignupScreenState extends State<SignupScreen> {
 
   final TextEditingController _pass = TextEditingController();
 
-  final TextEditingController _name = TextEditingController();
-
   @override
   void dispose() {
     super.dispose();
@@ -50,11 +48,6 @@ class SignupScreenState extends State<SignupScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextFormField(
-                controller: _name,
-                decoration: const InputDecoration(
-                    hintText: 'Name', icon: Icon(Icons.person)),
-              ),
               SizedBoxWidget.box(10.0),
               TextFormField(
                 controller: _email,
@@ -93,8 +86,6 @@ class SignupScreenState extends State<SignupScreen> {
                   } else if (_pass.text.isEmpty) {
                     Utils.flushBarErrorMessage(
                         "Password cannot be empty", context);
-                  } else if (_name.text.isEmpty) {
-                    Utils.flushBarErrorMessage("Name cannot be empty", context);
                   } else if (_pass.text.length < 6) {
                     Utils.flushBarErrorMessage(
                         "Password cannot be less than 6", context);
@@ -102,8 +93,11 @@ class SignupScreenState extends State<SignupScreen> {
                     if (kDebugMode) {
                       print("Sign Up");
                     }
-                    FirebaseCalls().signUp(_email.text.toString(),
-                        _pass.text.toString(), context, _name.text.toString());
+                    FirebaseCalls().signUp(
+                      _email.text.toString(),
+                      _pass.text.toString(),
+                      context,
+                    );
                   }
                 },
               ),

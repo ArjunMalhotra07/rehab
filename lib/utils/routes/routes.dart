@@ -35,10 +35,7 @@ class Routes {
         return MaterialPageRoute(builder: ((context) => const CheckLogin()));
 
       case RoutesName.main:
-        return MaterialPageRoute(
-            builder: ((context) => const MainView(
-                  name: "",
-                )));
+        return MaterialPageRoute(builder: ((context) => const MainView()));
 
       default:
         return MaterialPageRoute(

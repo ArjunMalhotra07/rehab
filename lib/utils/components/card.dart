@@ -1,14 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
 import 'package:rehab/utils/utils.dart';
-
-import '../../view_model/getter.dart';
 
 class CardWidget extends StatefulWidget {
   final String? title;

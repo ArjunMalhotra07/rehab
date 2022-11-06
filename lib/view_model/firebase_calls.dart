@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
-import 'package:rehab/view/main_view.dart';
 
 import '../utils/routes/routes_name.dart';
 
@@ -18,7 +17,7 @@ class FirebaseCalls {
   final minute = DateTime.now().minute;
   final hour = DateTime.now().hour;
 
-  Future signUp(String email, pass, BuildContext context, String name) async {
+  Future signUp(String email, pass, BuildContext context) async {
     try {
       await firebaseObject
           .createUserWithEmailAndPassword(email: email, password: pass)
