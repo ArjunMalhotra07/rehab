@@ -144,11 +144,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = ListenFirebase().counter;
+    final authViewMode = Provider.of<ListenFirebase>(context);
 
-    final ValueNotifier<int> _counterVar = ValueNotifier<int>(0);
-
-    ValueNotifier<int> data = ValueNotifier(ListenFirebase().counter);
+    ValueNotifier<int?> data = ValueNotifier(ListenFirebase().counter);
     var uid = user?.uid;
     final now = DateTime.now();
     var day = now.day;
@@ -203,17 +201,17 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Image.asset('assets/tick.png',
                                   height: 50, fit: BoxFit.fill),
-                              ValueListenableBuilder(
-                                valueListenable: data,
-                                builder: (BuildContext context, int value,
-                                    Widget? child) {
-                                  // This builder will only get called when the _counter
-                                  // is updated.
-                                  return TextStyleWidget.textStyle(
-                                      "Completed \n sessions", 15,
-                                      c: Constants.blackShade1);
-                                },
-                              ),
+                              // ValueListenableBuilder(
+                              //   valueListenable: data,
+                              //   builder: (BuildContext context, int value,
+                              //       Widget? child) {
+                              //     // This builder will only get called when the _counter
+                              //     // is updated.
+                              //     return TextStyleWidget.textStyle(
+                              //         "Completed \n$_counter sessions", 15,
+                              //         c: Constants.blackShade1);
+                              //   },
+                              // ),
                               const Spacer(),
                               Image.asset('assets/arrow.png',
                                   height: 50, fit: BoxFit.fill),
@@ -234,9 +232,6 @@ class _HomePageState extends State<HomePage> {
                       query: ref,
                       itemBuilder: ((context, snapshot, animation, index) {
                         var object = snapshot.children; //Every time stamp
-                        int length = object.length;
-                        debugPrint("Key --> ${snapshot.key}");
-                        debugPrint("length of Object --> ${length.toString()}");
                         final childrenWidget = <Widget>[];
                         for (final timeStamp in object) {
                           if (snapshot.key ==
@@ -252,8 +247,8 @@ class _HomePageState extends State<HomePage> {
                               assetUrl = 'assets/woman3.jpeg';
                             }
                             childrenWidget.add(CardWidget(
-                              status: "Complete ",
-                              title: "Session ",
+                              status: "Complete",
+                              title: "Session",
                               height: 170.0,
                               width: 450.0,
                               time:
@@ -262,9 +257,6 @@ class _HomePageState extends State<HomePage> {
                             ));
                           }
                         }
-                        debugPrint("Terminate");
-                        debugPrint(_counter.toString());
-                        debugPrint("");
                         return Column(
                           children: childrenWidget,
                         );

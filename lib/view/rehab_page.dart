@@ -108,10 +108,7 @@ class _RehabPageState extends State<RehabPage> {
                 physics: const ClampingScrollPhysics(),
                 query: ref,
                 itemBuilder: ((context, snapshot, animation, index) {
-                  var object = snapshot.children; //Every time stamp
-                  int length = object.length;
-                  debugPrint("Key --> ${snapshot.key}");
-                  debugPrint("length of Object --> ${length.toString()}");
+                  var object = snapshot.children;
                   final childrenWidget = <Widget>[];
                   for (final timeStamp in object) {
                     counter += 1;
@@ -121,12 +118,9 @@ class _RehabPageState extends State<RehabPage> {
                     } else {
                       assetUrl = 'assets/pic2.png';
                     }
-                    debugPrint(timeStamp.key);
                     childrenWidget.add(list(timeStamp.key.toString(),
                         snapshot.key.toString(), assetUrl));
                   }
-                  debugPrint("Terminate");
-                  debugPrint("");
                   return Column(
                     children: childrenWidget,
                   );
