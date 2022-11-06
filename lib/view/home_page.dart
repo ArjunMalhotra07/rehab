@@ -94,6 +94,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:rehab/utils/components/card.dart';
 import 'package:rehab/utils/components/colors.dart';
@@ -193,6 +194,16 @@ class _HomePageState extends State<HomePage> {
                                     "${myCounter.counter * 10}%", 22,
                                     c: Constants.blueColor),
                               ],
+                            ),
+                            SizedBoxWidget.box(20.0),
+                            LinearPercentIndicator(
+                              lineHeight: 15,
+                              progressColor: Constants.blueColor,
+                              percent: myCounter.counter * .1,
+                              animationDuration: 700,
+                              animation: true,
+                              barRadius: const Radius.circular(12),
+                              backgroundColor: Constants.lightGreyColor,
                             ),
                             const Spacer(),
                             Row(
