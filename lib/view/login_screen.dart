@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/routes/routes_name.dart';
+import 'package:rehab/view/signup_screen.dart';
 import 'package:rehab/view_model/firebase_calls.dart';
 
 import '../utils/components/round_buttons.dart';
@@ -93,7 +94,11 @@ class LoginScreenState extends State<LoginScreen> {
               SizedBoxWidget.box(25.0),
               GestureDetector(
                 onTap: () {
-                  Navigator.popAndPushNamed(context, RoutesName.signup);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SignupScreen()),
+                  );
                 },
                 child: const Text(
                   "Sign Up",

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
 import 'package:rehab/view/login_screen.dart';
+import 'package:rehab/view/main_view.dart';
 
 import '../utils/routes/routes_name.dart';
 
@@ -27,7 +28,10 @@ class FirebaseCalls {
           print("Id ${value.user?.email}");
         }
         Timer(const Duration(seconds: 1), () {
-          Navigator.pushReplacementNamed(context, RoutesName.main);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MainView()),
+          );
         });
         Utils.flushBarErrorMessage("Sign Up Successful", context,
             color: Constants.blueColor);
@@ -58,7 +62,10 @@ class FirebaseCalls {
           print("Id $value");
         }
         Timer(const Duration(seconds: 1), () {
-          Navigator.pushNamed(context, RoutesName.main);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MainView()),
+          );
         });
         Utils.flushBarErrorMessage("Login Successful", context,
             color: Constants.blueColor);
