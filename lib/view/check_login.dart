@@ -19,14 +19,9 @@ class _CheckLoginState extends State<CheckLogin> {
         body: StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        if (kDebugMode) {
-          print("Check Login Status Page");
-          print(snapshot.data);
-          print("");
-        }
         if (snapshot.hasData) {
           return const MainView(
-            name: "",
+            name: "123456789",
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

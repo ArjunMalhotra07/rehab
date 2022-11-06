@@ -1,9 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/view/practice_screen.dart';
 import 'package:rehab/view/home_page.dart';
 import 'package:rehab/view/profile_page.dart';
 import 'package:rehab/view/rehab_page.dart';
+
+import '../utils/utils.dart';
 
 class MainView extends StatefulWidget {
   const MainView({Key? key, required this.name}) : super(key: key);
@@ -13,6 +18,33 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
+  @override
+  void initState() {
+    super.initState();
+    if (kDebugMode) {
+      print("name --- ");
+      print(widget.name.toString());
+    }
+    if (widget.name != "123456789") {
+      addData();
+    }
+  }
+
+  final user = FirebaseAuth.instance.currentUser;
+  addData() {
+    var uid = user?.uid;
+    final databaseRef = FirebaseDatabase.instance.ref('uids');
+    print(uid);
+    databaseRef.child("$uid").update({"name": widget.name}).then((value) {
+      print("Added name");
+    }).catchError((error, stackTrace) {
+      if (kDebugMode) {
+        print(error.toString());
+      }
+      Utils.flushBarErrorMessage(error.message.toString(), context);
+    });
+  }
+
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {

@@ -23,12 +23,17 @@ class ListenFirebase extends ChangeNotifier {
     final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions/$s');
     DatabaseEvent event = await ref.once();
     var object = event.snapshot;
-    debugPrint(object.key);
     for (final children in object.children) {
-      debugPrint(children.key);
       count += 1;
       setCounter(count);
+      setListofKeys(children.key);
     }
-    print(count);
+  }
+
+  final List<String?> _keysList = [];
+  List<String?> get listOfKeys => _keysList;
+  setListofKeys(String? value) {
+    _keysList.add(value);
+    notifyListeners();
   }
 }
