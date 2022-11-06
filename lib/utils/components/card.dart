@@ -40,7 +40,6 @@ class _CardWidgetState extends State<CardWidget> {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     var uid = user?.uid;
-    final databaseRef1 = FirebaseDatabase.instance.ref('uids/$uid/sessions');
     return Padding(
       padding: const EdgeInsets.only(bottom: 30.0),
       child: Container(
@@ -73,10 +72,6 @@ class _CardWidgetState extends State<CardWidget> {
                                   Utils.flushBarErrorMessage(
                                       "This session is already completed",
                                       context);
-
-                                  context
-                                      .read<ListenFirebase>()
-                                      .funcGetTodayEntries('6-11-2022');
                                 },
                           height: 30,
                           buttonColor: widget.status == "Incomplete"
