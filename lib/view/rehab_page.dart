@@ -15,13 +15,11 @@ class RehabPage extends StatefulWidget {
 }
 
 class _RehabPageState extends State<RehabPage> {
-  final user = FirebaseAuth.instance.currentUser;
-  final auth = FirebaseAuth.instance;
   final ref = FirebaseDatabase.instance.ref('');
 
   @override
   Widget build(BuildContext context) {
-    var uid = user?.uid;
+    var uid = Constants().userId();
     int counter = 0;
     final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions');
     return Scaffold(

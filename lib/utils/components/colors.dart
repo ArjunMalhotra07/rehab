@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Constants {
@@ -18,4 +19,11 @@ class Constants {
   static const Color greyColor = Colors.grey;
 
   static Color lightGreyColor = Colors.grey.shade300;
+
+  final user = FirebaseAuth.instance.currentUser;
+
+  String userId() {
+    var uid = user?.uid;
+    return uid.toString();
+  }
 }
