@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                 // ListView.Builder
                 Padding(
                   padding: const EdgeInsets.only(left: 25.0),
-                  child: ListView.builder(
+                  child: Obx(() => ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
                       itemCount: 10 - controller.counter,
@@ -177,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                           imageUrl: assetUrl,
                           context: context,
                         );
-                      })),
+                      }))),
                 ),
                 SizedBoxWidget.box(45.0)
               ]),
@@ -201,10 +201,8 @@ class _HomePageState extends State<HomePage> {
                               Utils.flushBarErrorMessage(
                                   "Added Session", context,
                                   color: Constants.blueColor);
-                              context
-                                  .read<ListenFirebase>()
-                                  .funcGetTodayEntries(
-                                      "${now.day}-${now.month}-${now.year}");
+                              controller.funcGetTodayEntries(
+                                  '${now.day}-${now.month}-${now.year}');
                             }).catchError((error, stackTrace) {
                               if (kDebugMode) {
                                 print(error.toString());
