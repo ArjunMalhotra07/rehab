@@ -62,15 +62,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 }),
           ),
           SizedBoxWidget.box(50.0),
-          Center(
-            child: RoundButton(
-                width: 300,
-                buttonColor: Constants.blueColor,
-                title: "Sign Out",
-                onPress: () {
-                  FirebaseCalls().signOut(context);
-                }),
-          ),
+          // Center(
+          //   child: RoundButton(
+          //       width: 300,
+          //       buttonColor: Constants.blueColor,
+          //       title: "Sign Out",
+          //       onPress: () {
+          //         FirebaseCalls().signOut(context);
+          //       }),
+          // ),
         ],
       ),
     );

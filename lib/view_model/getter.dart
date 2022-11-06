@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 
 class ListenFirebase extends ChangeNotifier {
   final user = FirebaseAuth.instance.currentUser;
+  final String? userId;
+  ListenFirebase(this.userId);
 
   int _counter = 0;
   int get counter => _counter;
@@ -19,8 +21,7 @@ class ListenFirebase extends ChangeNotifier {
   funcGetTodayEntries(String s) async {
     var count = 0;
     debugPrint("***************");
-    var uid = user?.uid;
-    final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions/$s');
+    final ref = FirebaseDatabase.instance.ref('uids/$userId/sessions/$s');
     DatabaseEvent event = await ref.once();
     var object = event.snapshot;
     for (final children in object.children) {

@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
     final myCounter = context.watch<ListenFirebase>();
     final myFlag = context.watch<ListenFirebase>();
     return ChangeNotifierProvider(
-      create: (_) => ListenFirebase(),
+      create: (_) => ListenFirebase(uid),
       child: Scaffold(
         backgroundColor: Constants.whiteColor,
         appBar: AppBar(
