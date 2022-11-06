@@ -14,8 +14,7 @@ import '../utils/components/round_buttons.dart';
 import '../view_model/getter.dart';
 
 class HomePage extends StatefulWidget {
-  String? name;
-  HomePage({super.key, this.name});
+  HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -30,6 +29,17 @@ class _HomePageState extends State<HomePage> {
     context
         .read<ListenFirebase>()
         .funcGetTodayEntries("${now.day}-${now.month}-${now.year}");
+    getName();
+  }
+
+  dynamic snapshot;
+  var name;
+  void getName() async {
+    var uid = user?.uid;
+
+    var dbRef = FirebaseDatabase.instance.ref('uids/$uid').child("name");
+    snapshot = await dbRef.get(); // 👈 Use await here
+    name = snapshot.value;
   }
 
   @override
@@ -58,10 +68,14 @@ class _HomePageState extends State<HomePage> {
               const EdgeInsets.only(top: 25.0, left: 35, right: 35, bottom: 10),
           child: Stack(
             children: [
-              Container(
+              SizedBox(
                 child: ListView(children: [
-                  TextStyleWidget.textStyle("Good Morning \nJane", 35,
-                      c: Constants.blackShade),
+                  name == null
+                      ? TextStyleWidget.textStyle("Good Morning \n", 35,
+                          c: Constants.blackShade)
+                      : TextStyleWidget.textStyle(
+                          "Good Morning \n${snapshot.value}", 35,
+                          c: Constants.blackShade),
                   SizedBoxWidget.box(15.0),
                   Container(
                       decoration: BoxDecoration(

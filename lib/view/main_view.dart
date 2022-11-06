@@ -49,9 +49,7 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-      HomePage(
-        name: widget.name,
-      ),
+      HomePage(),
       const RehabPage(),
       PracticePage(),
       const ProfilePage()
