@@ -3,9 +3,12 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
 import 'package:rehab/utils/utils.dart';
+
+import '../../view_model/getter.dart';
 
 class CardWidget extends StatefulWidget {
   final String? title;
@@ -14,6 +17,7 @@ class CardWidget extends StatefulWidget {
   final double height, width;
   final String? status;
   final int? counterVar;
+  final BuildContext? context;
   const CardWidget(
       {super.key,
       this.time,
@@ -22,6 +26,7 @@ class CardWidget extends StatefulWidget {
       required this.height,
       required this.width,
       this.counterVar,
+      this.context,
       this.status});
 
   @override
@@ -58,45 +63,38 @@ class _CardWidgetState extends State<CardWidget> {
                   TextStyleWidget.textStyle(widget.title.toString(), 21,
                       c: Constants.blackShade),
                   RoundButton(
-                    title: widget.status ?? "Start",
-                    onPress: () {
-                      if (widget.counterVar != 10) {
-                        widget.status == null
-                            ? () {
-                                databaseRef1
-                                    .child(
-                                        "${now.day}-${now.month}-${now.year}")
-                                    .update({now2: "${widget.title}"}).then(
-                                        (value) {
-                                  Utils.flushBarErrorMessage(
-                                      "Added Session", context,
-                                      color: Constants.blueColor);
-                                }).catchError((error, stackTrace) {
-                                  if (kDebugMode) {
-                                    print(error.toString());
-                                  }
-                                  Utils.flushBarErrorMessage(
-                                      error.message.toString(), context);
-                                });
+                    title: widget.status == "Complete" ? "Completed" : "Start",
+                    onPress: widget.status == "Incomplete"
+                        ? () {
+                            databaseRef1
+                                .child("${now.day}-${now.month}-${now.year}")
+                                .update({now2: "${widget.title}"}).then(
+                                    (value) {
+                              Utils.flushBarErrorMessage(
+                                  "Added Session", context,
+                                  color: Constants.blueColor);
+                              widget.context?.read<ListenFirebase>().func();
+                            }).catchError((error, stackTrace) {
+                              if (kDebugMode) {
+                                print(error.toString());
                               }
-                            : () {
-                                Utils.flushBarErrorMessage(
-                                    "This session is completed", context);
-                              };
-                      } else {
-                        Utils.flushBarErrorMessage(
-                            "No sessions for today", context,
-                            color: Constants.redColor);
-                      }
-                    },
+                              Utils.flushBarErrorMessage(
+                                  error.message.toString(), context);
+                            });
+                          }
+                        : () {
+                            Utils.flushBarErrorMessage(
+                                "This session is already completed", context);
+                          },
                     height: 30,
-                    buttonColor: widget.status == null
+                    buttonColor: widget.status == "Incomplete"
                         ? Colors.grey.shade300
                         : Constants.blueColor,
                     width: 100,
                     titleSize: 15,
                   ),
-                  TextStyleWidget.textStyle(widget.time.toString(), 15,
+                  TextStyleWidget.textStyle(
+                      widget.time != null ? widget.time.toString() : "", 15,
                       c: Constants.greyColor),
                   SizedBoxWidget.box(10.0),
                 ],

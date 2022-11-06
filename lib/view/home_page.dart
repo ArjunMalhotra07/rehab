@@ -214,6 +214,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )),
                   SizedBoxWidget.box(35.0),
+                  // FirebaseAnimatedList
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
                     child: FirebaseAnimatedList(
@@ -229,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                               debugPrint(timeStamp.key);
                               childrenWidget.add(CardWidget(
                                 status: "Complete",
-                                title: "Session",
+                                title: timeStamp.value.toString(),
                                 height: 170.0,
                                 width: 450.0,
                                 time:
@@ -243,6 +244,7 @@ class _HomePageState extends State<HomePage> {
                           );
                         })),
                   ),
+                  // ListView.Builder
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
                     child: ListView.builder(
@@ -259,12 +261,12 @@ class _HomePageState extends State<HomePage> {
                             assetUrl = 'assets/woman3.jpeg';
                           }
                           return CardWidget(
-                            title: "Session ${index + 1}",
+                            status: "Incomplete",
+                            title: "Session ${myCounter.counter + index + 1}",
                             height: 170.0,
                             width: 100.0,
-                            time: "",
                             imageUrl: assetUrl,
-                            counterVar: myCounter.counter,
+                            context: context,
                           );
                         })),
                   ),
@@ -279,14 +281,14 @@ class _HomePageState extends State<HomePage> {
                   width: 320,
                   onPress: () {
                     if (myCounter.counter != 10) {
-                      f(kDebugMode) {
+                      if (kDebugMode) {
                         print("Clicked");
                       }
-
                       databaseRef1
                           .child("$day-${now.month}-${now.year}")
-                          .update({now2: "Example${now.microsecond}"}).then(
-                              (value) {
+                          .update({
+                        now2: "Session ${myCounter.counter + 1}"
+                      }).then((value) {
                         Utils.flushBarErrorMessage("Added Session", context,
                             color: Constants.blueColor);
                         context.read<ListenFirebase>().func();
