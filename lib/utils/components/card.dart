@@ -68,15 +68,15 @@ class _CardWidgetState extends State<CardWidget> {
                               ? "Completed"
                               : "Start",
                           onPress: widget.status == "Incomplete"
-                              ? () {
-                                  widget.context
-                                      .read<ListenFirebase>()
-                                      .changeFlag();
-                                }
+                              ? () {}
                               : () {
                                   Utils.flushBarErrorMessage(
                                       "This session is already completed",
                                       context);
+
+                                  context
+                                      .read<ListenFirebase>()
+                                      .funcGetTodayEntries('6-11-2022');
                                 },
                           height: 30,
                           buttonColor: widget.status == "Incomplete"

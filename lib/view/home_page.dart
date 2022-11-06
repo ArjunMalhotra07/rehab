@@ -112,6 +112,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final now = DateTime.now();
   final user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
@@ -123,7 +124,9 @@ class _HomePageState extends State<HomePage> {
     if (widget.name != null || widget.name != "") {
       addData();
     }
-    context.read<ListenFirebase>().func();
+    context
+        .read<ListenFirebase>()
+        .funcGetTodayEntries("${now.day}-${now.month}-${now.year}");
     // context.read<ListenFirebase>().changeFlag();
   }
 
@@ -150,7 +153,8 @@ class _HomePageState extends State<HomePage> {
     final now2 = DateFormat('hh:mm a').format(DateTime.now());
 
     final databaseRef1 = FirebaseDatabase.instance.ref('uids/$uid/sessions');
-    final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions');
+    final ref = FirebaseDatabase.instance
+        .ref('uids/$uid/sessions/${now.day}-${now.month}-${now.year}');
 
     final myCounter = context.watch<ListenFirebase>();
     final myFlag = context.watch<ListenFirebase>();
@@ -235,23 +239,16 @@ class _HomePageState extends State<HomePage> {
                         physics: const ClampingScrollPhysics(),
                         query: ref,
                         itemBuilder: ((context, snapshot, animation, index) {
-                          var object = snapshot.children; //Every time stamp
                           final childrenWidget = <Widget>[];
-                          for (final timeStamp in object) {
-                            if (snapshot.key ==
-                                "${now.day}-${now.month}-${now.year}") {
-                              childrenWidget.add(CardWidget(
-                                context: context,
-                                status: "Complete",
-                                title: timeStamp.value.toString(),
-                                height: 170.0,
-                                width: 450.0,
-                                time:
-                                    "Performed at \n${timeStamp.key.toString()}",
-                                counterVar: myCounter.counter,
-                              ));
-                            }
-                          }
+                          childrenWidget.add(CardWidget(
+                            context: context,
+                            status: "Complete",
+                            title: snapshot.value.toString(),
+                            height: 170.0,
+                            width: 450.0,
+                            time: "Performed at \n${snapshot.key.toString()}",
+                            counterVar: myCounter.counter,
+                          ));
                           return Column(
                             children: childrenWidget,
                           );
@@ -304,7 +301,8 @@ class _HomePageState extends State<HomePage> {
                       }).then((value) {
                         Utils.flushBarErrorMessage("Added Session", context,
                             color: Constants.blueColor);
-                        context.read<ListenFirebase>().func();
+                        context.read<ListenFirebase>().funcGetTodayEntries(
+                            "${now.day}-${now.month}-${now.year}");
                       }).catchError((error, stackTrace) {
                         if (kDebugMode) {
                           print(error.toString());

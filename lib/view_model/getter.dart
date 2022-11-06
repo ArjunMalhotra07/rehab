@@ -10,41 +10,25 @@ class ListenFirebase extends ChangeNotifier {
   int get counter => _counter;
   setCounter(int value) {
     _counter = value;
-    print(_counter);
     notifyListeners();
   }
 
   final now = DateTime.now();
   final now2 = DateFormat('hh:mm a').format(DateTime.now());
-  func() async {
+
+  funcGetTodayEntries(String s) async {
     var count = 0;
-    debugPrint("Inside func method ");
+    debugPrint("***************");
     var uid = user?.uid;
-    final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions');
+    final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions/$s');
     DatabaseEvent event = await ref.once();
-    var children = event.snapshot.children;
-    for (final object in children) {
-      var json = object;
+    var object = event.snapshot;
+    debugPrint(object.key);
+    for (final children in object.children) {
+      debugPrint(children.key);
+      count += 1;
       setCounter(count);
-      for (final timeStampe in json.children) {
-        if (object.key == "${now.day}-${now.month}-${now.year}") {
-          debugPrint(timeStampe.key);
-          count += 1;
-          setCounter(count);
-        }
-      }
     }
-  }
-
-  changeFlag() {
-    setFlag(true);
-  }
-
-  bool _flag = false;
-  bool get flag => _flag;
-  setFlag(bool value) {
-    _flag = value;
-    print(_flag);
-    notifyListeners();
+    print(count);
   }
 }
