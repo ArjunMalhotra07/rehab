@@ -4,8 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rehab/main.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
+import 'package:rehab/view_model/getter.dart';
 
 class RehabPage extends StatefulWidget {
   const RehabPage({super.key});
@@ -16,6 +19,16 @@ class RehabPage extends StatefulWidget {
 
 class _RehabPageState extends State<RehabPage> {
   final ref = FirebaseDatabase.instance.ref('');
+
+  final now = DateTime.now();
+  late ListenFirebase1 controller = Get.put(ListenFirebase1(""));
+  var uid = Constants().userId();
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(ListenFirebase1(uid));
+    controller.funcGetAllEntries();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +44,7 @@ class _RehabPageState extends State<RehabPage> {
       body: Padding(
         padding: const EdgeInsets.only(left: 30.0, right: 30),
         child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: [
             const Text(
               "Rehab Programme",
@@ -72,7 +86,9 @@ class _RehabPageState extends State<RehabPage> {
                             Row(
                               children: [
                                 Image.asset('assets/dumb.png'),
-                                TextStyleWidget.textStyle("16", 30),
+                                Obx((() => TextStyleWidget.textStyle(
+                                    controller.totalCounterVar.value.toString(),
+                                    30)))
                               ],
                             )
                           ],

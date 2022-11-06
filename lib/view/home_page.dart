@@ -64,7 +64,8 @@ class _HomePageState extends State<HomePage> {
         child: Stack(
           children: [
             SizedBox(
-              child: ListView(children: [
+              child:
+                  ListView(physics: const BouncingScrollPhysics(), children: [
                 name == null
                     ? TextStyleWidget.textStyle("Good Morning \n", 35,
                         c: Constants.blackShade)

@@ -29,5 +29,23 @@ class ListenFirebase1 extends GetxController {
     }
   }
 
-  int counterTest = 16;
+  RxInt totalCounterVar = 0.obs;
+  int get totalCounter => totalCounterVar.value;
+  setTotalCounter(int value) {
+    totalCounterVar.value = value;
+    update();
+  }
+
+  funcGetAllEntries() async {
+    int count = 0;
+    final ref = FirebaseDatabase.instance.ref('uids/$userId/sessions');
+    DatabaseEvent event = await ref.once();
+    var object = event.snapshot;
+    for (final json in object.children) {
+      for (final _ in json.children) {
+        count += 1;
+        setTotalCounter(count);
+      }
+    }
+  }
 }
