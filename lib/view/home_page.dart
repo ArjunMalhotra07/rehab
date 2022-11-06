@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
 
     controller = Get.put(ListenFirebase1(uid));
     controller.funcGetTodayEntries('${now.day}-${now.month}-${now.year}');
+    controller.getName(uid);
     getName();
   }
 
@@ -66,12 +67,11 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               child:
                   ListView(physics: const BouncingScrollPhysics(), children: [
-                name == null
-                    ? TextStyleWidget.textStyle("Good Morning \n", 35,
-                        c: Constants.blackShade)
-                    : TextStyleWidget.textStyle(
-                        "Good Morning \n${snapshot.value}", 35,
-                        c: Constants.blackShade),
+                Obx(
+                  () => TextStyleWidget.textStyle(
+                      "Good Morning \n${controller.nameVar.toString()}", 35,
+                      c: Constants.blackShade),
+                ),
                 SizedBoxWidget.box(15.0),
                 Container(
                     decoration: BoxDecoration(

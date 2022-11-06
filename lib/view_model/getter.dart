@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../utils/components/colors.dart';
+
 class ListenFirebase1 extends GetxController {
   final user = FirebaseAuth.instance.currentUser;
   final String? userId;
@@ -47,5 +49,21 @@ class ListenFirebase1 extends GetxController {
         setTotalCounter(count);
       }
     }
+  }
+
+  RxString _name = ''.obs;
+  String get nameVar => _name.value;
+  setName(String value) {
+    _name.value = value;
+    update();
+  }
+
+  void getName(String uid) async {
+    dynamic snapshot;
+    var name;
+    var dbRef = FirebaseDatabase.instance.ref('uids/$uid').child("name");
+    snapshot = await dbRef.get();
+    name = snapshot.value;
+    setName(name);
   }
 }
