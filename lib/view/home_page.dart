@@ -123,6 +123,7 @@ class _HomePageState extends State<HomePage> {
       addData();
     }
     context.read<ListenFirebase>().func();
+    // context.read<ListenFirebase>().changeFlag();
   }
 
   addData() {
@@ -151,6 +152,7 @@ class _HomePageState extends State<HomePage> {
     final ref = FirebaseDatabase.instance.ref('uids/$uid/sessions');
 
     final myCounter = context.watch<ListenFirebase>();
+    final myFlag = context.watch<ListenFirebase>();
     return ChangeNotifierProvider(
       create: (_) => ListenFirebase(),
       child: Scaffold(
@@ -227,8 +229,8 @@ class _HomePageState extends State<HomePage> {
                           for (final timeStamp in object) {
                             if (snapshot.key ==
                                 "${now.day}-${now.month}-${now.year}") {
-                              debugPrint(timeStamp.key);
                               childrenWidget.add(CardWidget(
+                                context: context,
                                 status: "Complete",
                                 title: timeStamp.value.toString(),
                                 height: 170.0,
@@ -277,7 +279,7 @@ class _HomePageState extends State<HomePage> {
                 top: MediaQuery.of(context).size.height * .68,
                 child: Center(
                     child: RoundButton(
-                  title: "Start Session",
+                  title: "Start Session ${myCounter.counter + 1}",
                   width: 320,
                   onPress: () {
                     if (myCounter.counter != 10) {
@@ -312,19 +314,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-    );
-  }
-
-  list(String title, subtitle) {
-    return ListTile(
-      leading: ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
-          child: Image.asset(
-            'assets/pic1.png',
-          )),
-      title: Text(title),
-      subtitle: Text(subtitle),
-      trailing: const Text("View Results"),
     );
   }
 }

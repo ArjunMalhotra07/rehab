@@ -17,7 +17,7 @@ class CardWidget extends StatefulWidget {
   final double height, width;
   final String? status;
   final int? counterVar;
-  final BuildContext? context;
+  final BuildContext context;
   const CardWidget(
       {super.key,
       this.time,
@@ -26,7 +26,7 @@ class CardWidget extends StatefulWidget {
       required this.height,
       required this.width,
       this.counterVar,
-      this.context,
+      required this.context,
       this.status});
 
   @override
@@ -62,37 +62,30 @@ class _CardWidgetState extends State<CardWidget> {
                   SizedBoxWidget.box(10.0),
                   TextStyleWidget.textStyle(widget.title.toString(), 21,
                       c: Constants.blackShade),
-                  RoundButton(
-                    title: widget.status == "Complete" ? "Completed" : "Start",
-                    onPress: widget.status == "Incomplete"
-                        ? () {
-                            databaseRef1
-                                .child("${now.day}-${now.month}-${now.year}")
-                                .update({now2: "${widget.title}"}).then(
-                                    (value) {
-                              Utils.flushBarErrorMessage(
-                                  "Added Session", context,
-                                  color: Constants.blueColor);
-                              widget.context?.read<ListenFirebase>().func();
-                            }).catchError((error, stackTrace) {
-                              if (kDebugMode) {
-                                print(error.toString());
-                              }
-                              Utils.flushBarErrorMessage(
-                                  error.message.toString(), context);
-                            });
-                          }
-                        : () {
-                            Utils.flushBarErrorMessage(
-                                "This session is already completed", context);
-                          },
-                    height: 30,
-                    buttonColor: widget.status == "Incomplete"
-                        ? Colors.grey.shade300
-                        : Constants.blueColor,
-                    width: 100,
-                    titleSize: 15,
-                  ),
+                  widget.status != "Incomplete"
+                      ? RoundButton(
+                          title: widget.status == "Complete"
+                              ? "Completed"
+                              : "Start",
+                          onPress: widget.status == "Incomplete"
+                              ? () {
+                                  widget.context
+                                      .read<ListenFirebase>()
+                                      .changeFlag();
+                                }
+                              : () {
+                                  Utils.flushBarErrorMessage(
+                                      "This session is already completed",
+                                      context);
+                                },
+                          height: 30,
+                          buttonColor: widget.status == "Incomplete"
+                              ? Colors.grey.shade300
+                              : Constants.blueColor,
+                          width: 100,
+                          titleSize: 15,
+                        )
+                      : Container(),
                   TextStyleWidget.textStyle(
                       widget.time != null ? widget.time.toString() : "", 15,
                       c: Constants.greyColor),

@@ -35,4 +35,16 @@ class ListenFirebase extends ChangeNotifier {
       }
     }
   }
+
+  changeFlag() {
+    setFlag(true);
+  }
+
+  bool _flag = false;
+  bool get flag => _flag;
+  setFlag(bool value) {
+    _flag = value;
+    print(_flag);
+    notifyListeners();
+  }
 }
