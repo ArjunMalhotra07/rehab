@@ -27,15 +27,11 @@ class FirebaseCalls {
           print("Id ${value.user?.email}");
         }
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MainView(
-                    name: name,
-                  )),
-        );
+        Timer(const Duration(seconds: 1), () {
+          Navigator.popAndPushNamed(context, RoutesName.main);
+        });
         Utils.flushBarErrorMessage("Sign Up Successful", context,
-            color: Constants.greenColor);
+            color: Constants.blueColor);
       }).catchError((error, stackTrace) {
         if (kDebugMode) {
           print("error");

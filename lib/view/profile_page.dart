@@ -13,20 +13,13 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Center(
-          child: TextStyleWidget.textStyle("Profile Page", 15,
-              c: Constants.blackShade1),
-        ),
-        SizedBoxWidget.box(50.0),
-        RoundButton(
-            buttonColor: Constants.blueColor,
-            title: "Sign Out",
-            onPress: () {
-              FirebaseCalls().signOut(context);
-            }),
-      ],
+    return Center(
+      child: RoundButton(
+          buttonColor: Constants.blueColor,
+          title: "Sign Out",
+          onPress: () {
+            FirebaseCalls().signOut(context);
+          }),
     );
   }
 }
