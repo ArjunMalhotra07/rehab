@@ -20,13 +20,13 @@ class Routes {
         return MaterialPageRoute(builder: ((context) => const SignupScreen()));
 
       case RoutesName.home:
-        return MaterialPageRoute(builder: ((context) => HomePage()));
+        return MaterialPageRoute(builder: ((context) => const HomePage()));
 
       case RoutesName.rehab:
         return MaterialPageRoute(builder: ((context) => const RehabPage()));
 
       case RoutesName.practice:
-        return MaterialPageRoute(builder: ((context) => PracticePage()));
+        return MaterialPageRoute(builder: ((context) => const PracticePage()));
 
       case RoutesName.profile:
         return MaterialPageRoute(builder: ((context) => const ProfilePage()));

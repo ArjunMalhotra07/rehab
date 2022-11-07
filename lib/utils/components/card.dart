@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rehab/utils/components/colors.dart';
@@ -33,8 +32,6 @@ class _CardWidgetState extends State<CardWidget> {
   final now2 = DateFormat('hh:mm a').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    var uid = user?.uid;
     return Padding(
       padding: const EdgeInsets.only(bottom: 30.0),
       child: Container(
@@ -83,7 +80,7 @@ class _CardWidgetState extends State<CardWidget> {
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ClipRRect(

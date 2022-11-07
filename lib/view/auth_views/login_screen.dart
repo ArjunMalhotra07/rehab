@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rehab/utils/routes/routes_name.dart';
 import 'package:rehab/view/auth_views/signup_screen.dart';
 import 'package:rehab/view_model/firebase_calls.dart';
 

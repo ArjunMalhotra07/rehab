@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
-import '../utils/components/colors.dart';
 
 class ListenFirebase1 extends GetxController {
   final user = FirebaseAuth.instance.currentUser;
@@ -20,7 +17,7 @@ class ListenFirebase1 extends GetxController {
     update();
   }
 
-  RxList<String> _keysList = [''].obs;
+  final RxList<String> _keysList = [''].obs;
   RxList<String> get keysList => _keysList;
   setKeyList(String value) {
     _keysList.add(value);
@@ -59,7 +56,7 @@ class ListenFirebase1 extends GetxController {
     }
   }
 
-  RxString _name = ''.obs;
+  final RxString _name = ''.obs;
   String get nameVar => _name.value;
   setName(String value) {
     _name.value = value;
@@ -68,7 +65,7 @@ class ListenFirebase1 extends GetxController {
 
   void getName(String uid) async {
     dynamic snapshot;
-    var name;
+    var name = '';
     var dbRef = FirebaseDatabase.instance.ref('uids/$uid').child("name");
     snapshot = await dbRef.get();
     name = snapshot.value;

@@ -1,15 +1,11 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
 import 'package:rehab/view/auth_views/login_screen.dart';
 import 'package:rehab/view/main_view.dart';
-
-import '../utils/routes/routes_name.dart';
 
 class FirebaseCalls {
   var firebaseObject = FirebaseAuth.instance;
@@ -93,7 +89,7 @@ class FirebaseCalls {
       await firebaseObject.signOut().then((value) {
         Timer(const Duration(seconds: 1), () {
           Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => LoginScreen()),
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
               (route) => false);
         });
         Utils.flushBarErrorMessage("Logged out successfully ", context,
@@ -107,10 +103,5 @@ class FirebaseCalls {
       Utils.flushBarErrorMessage("Error Logging out ... ", context,
           color: Constants.redColor);
     }
-  }
-
-  void postDataToFirebase(String uid) {
-    final databaseRef = FirebaseDatabase.instance.ref('id/$uid/sessions');
-    return postDataToFirebase(uid);
   }
 }

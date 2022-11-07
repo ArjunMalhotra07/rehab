@@ -1,10 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
-import 'package:rehab/utils/routes/routes_name.dart';
 import 'package:rehab/utils/utils.dart';
 import 'package:rehab/view_model/firebase_calls.dart';
 
@@ -31,12 +27,6 @@ class SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final databaseRef = FirebaseDatabase.instance.ref('uids');
-    final day = DateTime.now().day;
-    final month = DateTime.now().month;
-    final year = DateTime.now().year;
-    final minute = DateTime.now().minute;
-    final hour = DateTime.now().hour;
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,

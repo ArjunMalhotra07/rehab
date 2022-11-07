@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
-import 'package:rehab/view_model/firebase_calls.dart';
 
 import '../../utils/utils.dart';
 
@@ -45,7 +44,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   final user = FirebaseAuth.instance.currentUser;
                   var uid = user?.uid;
                   final databaseRef = FirebaseDatabase.instance.ref('uids');
-                  print(uid);
                   databaseRef
                       .child("$uid")
                       .update({"name": _name.text}).then((value) {

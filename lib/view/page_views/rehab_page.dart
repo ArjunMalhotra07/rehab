@@ -1,11 +1,7 @@
-import 'dart:convert';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rehab/main.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
 import 'package:rehab/view_model/getter.dart';
@@ -148,7 +144,7 @@ class _RehabPageState extends State<RehabPage> {
   list(String title, subtitle, url) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
-      child: Container(
+      child: SizedBox(
         child: Row(children: [
           ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
@@ -156,7 +152,7 @@ class _RehabPageState extends State<RehabPage> {
                 url,
                 height: 70,
               )),
-          SizedBox(
+          const SizedBox(
             width: 30,
           ),
           Column(
@@ -167,7 +163,7 @@ class _RehabPageState extends State<RehabPage> {
                     Icons.timer_sharp,
                     size: 20,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   TextStyleWidget.textStyle(title, 16, c: Constants.blackShade),
@@ -180,7 +176,7 @@ class _RehabPageState extends State<RehabPage> {
                     Icons.calendar_today,
                     size: 20,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   TextStyleWidget.textStyle(subtitle, 14,
@@ -189,7 +185,7 @@ class _RehabPageState extends State<RehabPage> {
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           const Text("View Results")
         ]),
       ),

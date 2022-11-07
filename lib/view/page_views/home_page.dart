@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/foundation.dart';
@@ -6,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:provider/provider.dart';
 import 'package:rehab/utils/components/card.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
@@ -15,7 +13,7 @@ import '../../utils/components/round_buttons.dart';
 import '../../view_model/getter.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -198,7 +196,6 @@ class _HomePageState extends State<HomePage> {
                             now2 = DateFormat('hh:mm a').format(DateTime.now());
                           });
                           if (controller.counter != totalSessions) {
-                            print(controller.keysList);
                             var check = controller.keysList.any((element) =>
                                 element.toLowerCase() == now2.toLowerCase());
                             if (check == false) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
 
 class PracticePage extends StatefulWidget {
-  PracticePage({Key? key}) : super(key: key);
+  const PracticePage({Key? key}) : super(key: key);
 
   @override
   State<PracticePage> createState() => _PracticePageState();
