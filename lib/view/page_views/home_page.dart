@@ -202,9 +202,6 @@ class _HomePageState extends State<HomePage> {
                             var check = controller.keysList.any((element) =>
                                 element.toLowerCase() == now2.toLowerCase());
                             if (check == false) {
-                              debugPrint("Entry added");
-                              debugPrint(now2.toLowerCase());
-                              debugPrint("");
                               databaseRef1
                                   .child("$day-${now.month}-${now.year}")
                                   .update({
@@ -223,10 +220,6 @@ class _HomePageState extends State<HomePage> {
                                     error.message.toString(), context);
                               });
                             } else {
-                              debugPrint("XXXXX");
-                              debugPrint(controller.keysList.toString());
-                              debugPrint(now2.toLowerCase());
-                              debugPrint("");
                               Utils.flushBarErrorMessage(
                                   "You just finished the previous workout.",
                                   context);
