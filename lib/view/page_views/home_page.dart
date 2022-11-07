@@ -22,6 +22,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final int totalSessions = 2;
+  final double multiplyingFactor = .5;
   final now = DateTime.now();
   late ListenFirebase1 controller = Get.put(ListenFirebase1(""));
   var uid = Constants().userId();
@@ -32,15 +34,6 @@ class _HomePageState extends State<HomePage> {
     controller = Get.put(ListenFirebase1(uid));
     controller.funcGetTodayEntries('${now.day}-${now.month}-${now.year}');
     controller.getName(uid);
-    getName();
-  }
-
-  dynamic snapshot;
-  var name;
-  void getName() async {
-    var dbRef = FirebaseDatabase.instance.ref('uids/$uid').child("name");
-    snapshot = await dbRef.get(); // 👈 Use await here
-    name = snapshot.value;
   }
 
   @override
@@ -93,7 +86,8 @@ class _HomePageState extends State<HomePage> {
                                 const Spacer(),
                                 Obx(
                                   () => TextStyleWidget.textStyle(
-                                      "${controller.counter * 10}%", 22,
+                                      "${((controller.counter) / totalSessions) * 100}%",
+                                      22,
                                       c: Constants.blueColor),
                                 ),
                               ],
@@ -103,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                               () => LinearPercentIndicator(
                                 lineHeight: 15,
                                 progressColor: Constants.blueColor,
-                                percent: controller.counter * .1,
+                                percent: controller.counter * multiplyingFactor,
                                 animationDuration: 700,
                                 animation: true,
                                 barRadius: const Radius.circular(12),
@@ -123,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                                 Image.asset('assets/arrow.png',
                                     height: 50, fit: BoxFit.fill),
                                 Obx(() => TextStyleWidget.textStyle(
-                                    " Pending \n${10 - controller.counter} sessions",
+                                    " Pending \n${totalSessions - controller.counter} sessions",
                                     15,
                                     c: Constants.blackShade1)),
                               ],
@@ -168,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                   child: Obx(() => ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
-                      itemCount: 10 - controller.counter,
+                      itemCount: totalSessions - controller.counter,
                       itemBuilder: ((context, index) {
                         var assetUrl = '';
                         if (index % 3 == 0) {
@@ -195,12 +189,12 @@ class _HomePageState extends State<HomePage> {
               top: MediaQuery.of(context).size.height * .68,
               child: Center(
                   child: Obx((() => RoundButton(
-                        title: controller.counter == 10
+                        title: controller.counter == totalSessions
                             ? "Sessions Completed"
                             : "Start Session ${controller.counter + 1}",
                         width: 320,
                         onPress: () {
-                          if (controller.counter != 10) {
+                          if (controller.counter != totalSessions) {
                             if (kDebugMode) {
                               print("Clicked");
                             }
