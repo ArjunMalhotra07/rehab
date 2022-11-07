@@ -6,9 +6,9 @@ import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/view/page_views/practice_screen.dart';
 import 'package:rehab/view/page_views/home_page.dart';
 import 'package:rehab/view/page_views/profile_page.dart';
-import 'package:rehab/view/rehab_page.dart';
+import 'package:rehab/view/page_views/rehab_page.dart';
 
-import '../../utils/utils.dart';
+import '../utils/utils.dart';
 
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
 import 'package:rehab/view/auth_views/login_screen.dart';
-import 'package:rehab/view/page_views/main_view.dart';
+import 'package:rehab/view/main_view.dart';
 
 import '../utils/routes/routes_name.dart';
 
