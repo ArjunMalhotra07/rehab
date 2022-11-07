@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/routes/routes_name.dart';
-import 'package:rehab/view/signup_screen.dart';
+import 'package:rehab/view/auth_views/signup_screen.dart';
 import 'package:rehab/view_model/firebase_calls.dart';
 
-import '../utils/components/round_buttons.dart';
-import '../utils/utils.dart';
+import '../../utils/components/round_buttons.dart';
+import '../../utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

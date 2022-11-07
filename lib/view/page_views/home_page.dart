@@ -11,8 +11,8 @@ import 'package:rehab/utils/components/card.dart';
 import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/utils.dart';
 
-import '../utils/components/round_buttons.dart';
-import '../view_model/getter.dart';
+import '../../utils/components/round_buttons.dart';
+import '../../view_model/getter.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});

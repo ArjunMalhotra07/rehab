@@ -3,12 +3,12 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehab/utils/components/colors.dart';
-import 'package:rehab/view/practice_screen.dart';
-import 'package:rehab/view/home_page.dart';
-import 'package:rehab/view/profile_page.dart';
+import 'package:rehab/view/page_views/practice_screen.dart';
+import 'package:rehab/view/page_views/home_page.dart';
+import 'package:rehab/view/page_views/profile_page.dart';
 import 'package:rehab/view/rehab_page.dart';
 
-import '../utils/utils.dart';
+import '../../utils/utils.dart';
 
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
