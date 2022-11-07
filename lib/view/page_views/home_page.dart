@@ -22,8 +22,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final int totalSessions = 2;
-  final double multiplyingFactor = .5;
+  final int totalSessions = 10;
+  final double multiplyingFactor = .1;
   final now = DateTime.now();
   late ListenFirebase1 controller = Get.put(ListenFirebase1(""));
   var uid = Constants().userId();
@@ -198,23 +198,29 @@ class _HomePageState extends State<HomePage> {
                             if (kDebugMode) {
                               print("Clicked");
                             }
-                            databaseRef1
-                                .child("$day-${now.month}-${now.year}")
-                                .update({
-                              now2: "Session ${controller.counter + 1}"
-                            }).then((value) {
+                            if (!controller.keysList.contains(now2)) {
+                              databaseRef1
+                                  .child("$day-${now.month}-${now.year}")
+                                  .update({
+                                now2: "Session ${controller.counter + 1}"
+                              }).then((value) {
+                                Utils.flushBarErrorMessage(
+                                    "Added Session", context,
+                                    color: Constants.blueColor);
+                                controller.funcGetTodayEntries(
+                                    '${now.day}-${now.month}-${now.year}');
+                              }).catchError((error, stackTrace) {
+                                if (kDebugMode) {
+                                  print(error.toString());
+                                }
+                                Utils.flushBarErrorMessage(
+                                    error.message.toString(), context);
+                              });
+                            } else {
                               Utils.flushBarErrorMessage(
-                                  "Added Session", context,
-                                  color: Constants.blueColor);
-                              controller.funcGetTodayEntries(
-                                  '${now.day}-${now.month}-${now.year}');
-                            }).catchError((error, stackTrace) {
-                              if (kDebugMode) {
-                                print(error.toString());
-                              }
-                              Utils.flushBarErrorMessage(
-                                  error.message.toString(), context);
-                            });
+                                  "You just finished the previous workout.",
+                                  context);
+                            }
                           } else {
                             Utils.flushBarErrorMessage(
                                 "No sessions for today", context,

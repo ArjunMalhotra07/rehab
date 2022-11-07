@@ -20,14 +20,23 @@ class ListenFirebase1 extends GetxController {
     update();
   }
 
+  RxList<String> _keysList = [''].obs;
+  RxList<String> get keysList => _keysList;
+  setKeyList(String value) {
+    _keysList.add(value);
+    print(_keysList);
+    update();
+  }
+
   funcGetTodayEntries(String s) async {
     int count = 0;
     final ref = FirebaseDatabase.instance.ref('uids/$userId/sessions/$s');
     DatabaseEvent event = await ref.once();
     var object = event.snapshot;
-    for (final _ in object.children) {
+    for (final timeStamp in object.children) {
       count += 1;
       setCounter(count);
+      setKeyList(timeStamp.key.toString());
     }
   }
 
