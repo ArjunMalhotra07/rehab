@@ -24,7 +24,6 @@ class ListenFirebase1 extends GetxController {
   RxList<String> get keysList => _keysList;
   setKeyList(String value) {
     _keysList.add(value);
-    print(_keysList);
     update();
   }
 
