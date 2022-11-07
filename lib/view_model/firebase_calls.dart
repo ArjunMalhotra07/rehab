@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rehab/utils/components/colors.dart';
+import 'package:rehab/utils/routes/routes_name.dart';
 import 'package:rehab/utils/utils.dart';
 import 'package:rehab/view/auth_views/login_screen.dart';
 import 'package:rehab/view/main_view.dart';
@@ -24,10 +26,7 @@ class FirebaseCalls {
           print("Id ${value.user?.email}");
         }
         Timer(const Duration(seconds: 1), () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const MainView()),
-          );
+          Get.offAll(const MainView());
         });
         Utils.flushBarErrorMessage("Sign Up Successful", context,
             color: Constants.blueColor);
@@ -58,10 +57,7 @@ class FirebaseCalls {
           print("Id $value");
         }
         Timer(const Duration(seconds: 1), () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const MainView()),
-          );
+          Get.offAll(const MainView());
         });
         Utils.flushBarErrorMessage("Login Successful", context,
             color: Constants.blueColor);
@@ -88,9 +84,7 @@ class FirebaseCalls {
     try {
       await firebaseObject.signOut().then((value) {
         Timer(const Duration(seconds: 1), () {
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const LoginScreen()),
-              (route) => false);
+          Get.offAll(const LoginScreen());
         });
         Utils.flushBarErrorMessage("Logged out successfully ", context,
             color: Constants.blueColor);

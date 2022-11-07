@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rehab/view/auth_views/signup_screen.dart';
 import 'package:rehab/view_model/firebase_calls.dart';
 
 import '../../utils/components/round_buttons.dart';
+import '../../utils/routes/routes_name.dart';
 import '../../utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -93,11 +95,7 @@ class LoginScreenState extends State<LoginScreen> {
               SizedBoxWidget.box(25.0),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SignupScreen()),
-                  );
+                  Get.offAll(const SignupScreen());
                 },
                 child: const Text(
                   "Sign Up",

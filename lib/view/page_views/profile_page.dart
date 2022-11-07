@@ -6,6 +6,7 @@ import 'package:rehab/utils/components/colors.dart';
 import 'package:rehab/utils/components/round_buttons.dart';
 
 import '../../utils/utils.dart';
+import '../../view_model/firebase_calls.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
