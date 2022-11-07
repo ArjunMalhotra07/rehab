@@ -198,7 +198,9 @@ class _HomePageState extends State<HomePage> {
                             if (kDebugMode) {
                               print("Clicked");
                             }
-                            if (!controller.keysList.contains(now2)) {
+                            var check = controller.keysList
+                                .any((element) => element == now2);
+                            if (!check) {
                               databaseRef1
                                   .child("$day-${now.month}-${now.year}")
                                   .update({
