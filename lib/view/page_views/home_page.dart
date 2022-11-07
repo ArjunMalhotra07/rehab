@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final now = DateTime.now();
     var day = now.day;
-    final now2 = DateFormat('hh:mm a').format(DateTime.now());
+    var now2 = DateFormat('hh:mm a').format(DateTime.now());
 
     final databaseRef1 = FirebaseDatabase.instance.ref('uids/$uid/sessions');
     final ref = FirebaseDatabase.instance
@@ -194,13 +194,17 @@ class _HomePageState extends State<HomePage> {
                             : "Start Session ${controller.counter + 1}",
                         width: 320,
                         onPress: () {
+                          setState(() {
+                            now2 = DateFormat('hh:mm a').format(DateTime.now());
+                          });
                           if (controller.counter != totalSessions) {
-                            if (kDebugMode) {
-                              print("Clicked");
-                            }
-                            var check = controller.keysList
-                                .any((element) => element == now2);
-                            if (!check) {
+                            print(controller.keysList);
+                            var check = controller.keysList.any((element) =>
+                                element.toLowerCase() == now2.toLowerCase());
+                            if (check == false) {
+                              debugPrint("Entry added");
+                              debugPrint(now2.toLowerCase());
+                              debugPrint("");
                               databaseRef1
                                   .child("$day-${now.month}-${now.year}")
                                   .update({
@@ -219,6 +223,10 @@ class _HomePageState extends State<HomePage> {
                                     error.message.toString(), context);
                               });
                             } else {
+                              debugPrint("XXXXX");
+                              debugPrint(controller.keysList.toString());
+                              debugPrint(now2.toLowerCase());
+                              debugPrint("");
                               Utils.flushBarErrorMessage(
                                   "You just finished the previous workout.",
                                   context);
